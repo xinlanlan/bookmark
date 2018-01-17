@@ -119,6 +119,7 @@
         height: 100%
         margin: 0 auto
     .nickname
+      height: 32px
       text-align: center
       font-size: 32px
       color: #fff

@@ -174,7 +174,7 @@
           height: 14px
           margin-left: -7px
           bottom: -7px
-          transform3d: rotate(45deg)
+          transform: rotate(45deg)
           box-shadow: 0 0 16px rgba(0,0,0,.5)
         &:after
           width: 50px
