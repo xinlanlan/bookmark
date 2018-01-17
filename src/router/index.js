@@ -15,6 +15,12 @@ const Homepage = (resolve) => {
   })
 }
 
+const Personal = (resolve) => {
+  import('components/personal/personal').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -28,6 +34,10 @@ export default new Router({
     {
       path: '/homepage',
       component: Homepage
+    },
+    {
+      path: '/personal',
+      component: Personal
     }
   ]
 })

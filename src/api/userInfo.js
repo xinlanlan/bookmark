@@ -17,3 +17,14 @@ export function userLogin(username, pwd) {
     return Promise.resolve(res.data)
   })
 }
+
+/*
+ * 获取昵称接口
+ */
+export function getNickname() {
+  const url = '/ebook/user/getNeckName'
+
+  return axios.get(url).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

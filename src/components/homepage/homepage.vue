@@ -10,8 +10,8 @@
       >
         <div class="icon" :class="[menuIcon[item.name]]"></div>
         <div class="text">{{item.name}}</div>
-        <ul class="func" v-if="funcActive[index]">
-
+        <ul class="func" v-if="funcActive[index]" @click.stop>
+          <li v-if="cell.status" v-for="cell in func[index]" class="func-item">{{cell.name}}</li>
         </ul>
       </div>
       <!--<div class="footer-item">
@@ -40,8 +40,9 @@
 
 <script type="text/ecmascript-6">
   import {ERR_OK} from 'api/config'
-  import {getMenu} from './homepage'
+  import {getMenu} from './page'
   const FIRSTCONFIGID = 0
+  const PERSONALPAGE = 3
 
   export default {
     data() {
@@ -62,6 +63,14 @@
     },
     methods: {
       _getFunc(configId, index) {
+        // 如果点击的是个人中心
+        if (index === PERSONALPAGE) {
+          this.$router.push({
+            path: '/personal'
+          })
+          return
+        }
+
         // 点击菜单改变激活状态颜色
         for (let i = 0; i < this.funcActive.length; i++) {
           if (i === index) {
@@ -75,17 +84,17 @@
         if (!this.func[index]) {
           getMenu(configId).then((res) => {
             if (res.code === ERR_OK) {
-              console.log(res)
               this.func.splice(index, 0, res.list)
             }
           })
         }
       },
       _getMenu(configId) {
+        // 获取一级菜单
         getMenu(configId).then((res) => {
           if (res.code === ERR_OK) {
-            console.log(res)
             this.menu = res.list
+            this.func.length = res.list.length
           }
         })
       }
@@ -165,7 +174,7 @@
           height: 14px
           margin-left: -7px
           bottom: -7px
-          transform: rotate(45deg)
+          transform3d: rotate(45deg)
           box-shadow: 0 0 16px rgba(0,0,0,.5)
         &:after
           width: 50px
