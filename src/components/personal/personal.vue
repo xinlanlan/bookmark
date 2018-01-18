@@ -16,13 +16,13 @@
           <i class="arrow"></i>
         </span>
       </li>
-      <li class="list-item">
+      <router-link tag="li" class="list-item" to="/statistics">
         <span class="icon"></span>
         <span class="text">统计管理</span>
         <span class="point">
           <i class="arrow"></i>
         </span>
-      </li>
+      </router-link>
       <li class="list-item">
         <span class="icon"></span>
         <span class="text">我的错题</span>
@@ -69,14 +69,16 @@
 
     <!-- 退出登陆 -->
     <div class="logout">
-      <a class="logout-btn">退出当前账号</a>
+      <a class="logout-btn" @click="_logout">退出当前账号</a>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import MHeader from 'components/m-header/m-header'
-  import {getNickname} from 'api/userInfo'
+  import {alertTn} from 'common/js/confirm'
+  import {getNickname, logout} from 'api/userInfo'
+  import {ERR_OK} from 'api/config'
 
   export default {
     data() {
@@ -89,6 +91,25 @@
       this._getNickname()
     },
     methods: {
+      goNextPage(path) {
+        this.$router.push({
+          path: path
+        })
+      },
+      _logout() {
+        let that = this
+        alertTn('退出后不会删除任何历史数据', '提示', ['取消', '确定'], function(ret) {
+          if (ret.buttonIndex === 2) {
+            logout().then((res) => {
+              if (parseInt(res.code) === ERR_OK) {
+                that.$router.push({
+                  path: '/login'
+                })
+              }
+            })
+          }
+        })
+      },
       _getNickname() {
         getNickname().then((res) => {
           console.log(res)
@@ -107,7 +128,7 @@
   @import "~common/stylus/mixin"
   .personal-page
     min-height: 100%
-    background-color: #f2f2f2
+    background-color: $color-highlight-background
   .user-info
     background: linear-gradient(#65c1bc, #a6d8d7)
     padding-bottom: 23px
@@ -156,4 +177,7 @@
       border-top: 1px solid #ddd
       color: $color-theme
       background-color: #fff
+      cursor: pointer
+      &:active
+        background-color: $color-background-active
 </style>

@@ -21,6 +21,24 @@ const Personal = (resolve) => {
   })
 }
 
+const Statistics = (resolve) => {
+  import('components/statistics/statistics').then((module) => {
+    resolve(module)
+  })
+}
+
+const StatisticsRead = (resolve) => {
+  import('components/statistics/read/read').then((module) => {
+    resolve(module)
+  })
+}
+
+const StatisticsTest = (resolve) => {
+  import('components/statistics/test/test').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -38,6 +56,21 @@ export default new Router({
     {
       path: '/personal',
       component: Personal
+    },
+    {
+      path: '/statistics',
+      component: Statistics,
+      redirect: '/statistics/read',
+      children: [
+        {
+          path: '/statistics/read',
+          component: StatisticsRead
+        },
+        {
+          path: '/statistics/test',
+          component: StatisticsTest
+        }
+      ]
     }
   ]
 })

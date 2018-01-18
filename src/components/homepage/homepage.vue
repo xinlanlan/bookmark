@@ -123,6 +123,7 @@
       position: relative
       flex: 1
       text-align: center
+      cursor: pointer
       .text
         line-height: 34px
         font-size: 24px

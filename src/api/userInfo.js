@@ -19,6 +19,17 @@ export function userLogin(username, pwd) {
 }
 
 /*
+ * 退出登陆接口
+ */
+export function logout() {
+  const url = '/ebook/logout'
+
+  return axios.get(url).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+/*
  * 获取昵称接口
  */
 export function getNickname() {
