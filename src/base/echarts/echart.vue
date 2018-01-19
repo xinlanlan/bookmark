@@ -20,7 +20,8 @@
         xAxisTextName: '',
         yAxisTextName: '考试成绩',
         dataText: ['优秀', '良好', '合格', '不合格'],
-        dataArr: [10, 52, 200, 334]
+        dataArr: [10, 52, 200, 334],
+        chart: null
       }
     },
     mounted() {
@@ -28,7 +29,7 @@
     },
     methods: {
       // 柱状图的方法
-      getHistogram(echarts) {
+      getHistogram() {
         let option = {
           color: [BARCOLOR],
           legend: {
@@ -64,10 +65,10 @@
             }
           ]
         }
-        echarts.setOption(option)
+        this.chart.setOption(option)
       },
       // 折线图的方法
-      getLineChart(echarts) {
+      getLineChart() {
         let option = {
           legend: {
             data: [this.legendName],
@@ -97,10 +98,10 @@
             }
           ]
         }
-        echarts.setOption(option)
+        this.chart.setOption(option)
       },
       // 获取饼图的方法
-      getPie(echarts) {
+      getPie() {
         let option = {
           legend: {
             bottom: '5%',
@@ -133,17 +134,17 @@
             }
           ]
         }
-        echarts.setOption(option)
+        this.chart.setOption(option)
       },
       // 判断渲染不同的图表方法
       drawChart() {
-        let echarts = Echarts.init(this.$refs.chart)
+        this.chart = Echarts.init(this.$refs.chart)
         if (this.tabVal === 0) {
-          this.getHistogram(echarts)
+          this.getHistogram()
         } else if (this.tabVal === 1) {
-          this.getLineChart(echarts)
+          this.getLineChart()
         } else if (this.tabVal === 2) {
-          this.getPie(echarts)
+          this.getPie()
         }
       }
     },

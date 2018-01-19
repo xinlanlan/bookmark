@@ -8,12 +8,17 @@
         <li v-for="(item, index) in tabArr" @click="tabChart(index)" :class="{active: item.tabActive}" class="btn-item">{{item.text}}</li>
       </ul>
     </div>
-    <e-chart :tab-val="tabDefaultVal"></e-chart>
+    <!--<e-chart :tab-val="tabDefaultVal"></e-chart>-->
+    <histogram v-if="tabVal === 0"></histogram>
+    <line-chart v-if="tabVal === 1"></line-chart>
+    <pie-chart v-if="tabVal === 2"></pie-chart>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import EChart from './echart'
+  import Histogram from './histogram'
+  import LineChart from './line-chart'
+  import PieChart from './pie-chart'
   const TABDAFAULTVAL = 0
 
   export default {
@@ -36,7 +41,7 @@
             tabActive: false
           }
         ],
-        tabDefaultVal: TABDAFAULTVAL
+        tabVal: TABDAFAULTVAL
       }
     },
     methods: {
@@ -49,12 +54,14 @@
             this.tabArr[i].tabActive = false
           }
           this.tabArr[index].tabActive = true
-          this.tabDefaultVal = this.tabArr[index].value
+          this.tabVal = this.tabArr[index].value
         }
       }
     },
     components: {
-      EChart
+      Histogram,
+      LineChart,
+      PieChart
     }
   }
 </script>
