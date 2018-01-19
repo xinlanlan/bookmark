@@ -31,7 +31,6 @@
         line-height: 83px
       &.router-link-active
         .tab-link
-
           color: $color-theme
           border-bottom: 4px solid $color-theme
 </style>

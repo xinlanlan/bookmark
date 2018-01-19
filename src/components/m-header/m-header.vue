@@ -1,13 +1,13 @@
 <template>
   <div class="header">
-    <div class="title">{{headerText}}</div>
+    <div class="title">{{data}}</div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   export default {
     props: {
-      headerText: {
+      data: {
         type: String,
         default: '头部'
       }

@@ -1,6 +1,6 @@
 <template>
   <div class="personal-page">
-    <m-header :header-text="headerText"></m-header>
+    <m-header :data="headerText"></m-header>
     <div class="user-info">
       <div class="avatar">
         <img src="./avatar.png" alt="头像">

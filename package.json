@@ -24,7 +24,8 @@
     "vue-lazyload": "1.0.3",
     "vue-router": "^2.5.3",
     "vuex": "^2.3.1",
-    "md5": "^2.2.1"
+    "md5": "^2.2.1",
+    "echarts": "^4.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

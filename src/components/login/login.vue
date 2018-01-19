@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <m-header :header-text="headerText"></m-header>
+    <m-header :data="headerText"></m-header>
     <div class="content">
       <div class="logo">
         <img class="img" src="./logo.png" alt="">

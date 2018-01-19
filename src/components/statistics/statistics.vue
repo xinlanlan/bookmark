@@ -1,6 +1,6 @@
 <template>
   <div class="statistics-page">
-    <m-header :header-text="headerText"></m-header>
+    <m-header :data="headerText"></m-header>
     <tab></tab>
     <router-view></router-view>
   </div>

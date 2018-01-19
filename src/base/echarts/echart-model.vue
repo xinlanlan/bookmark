@@ -5,21 +5,54 @@
     </div>
     <div class="tab-chart">
       <ul class="tab-btn-group">
-        <li class="btn-item active">柱状</li>
-        <li class="btn-item">折线</li>
-        <li class="btn-item">饼状</li>
+        <li v-for="(item, index) in tabArr" @click="tabChart(index)" :class="{active: item.tabActive}" class="btn-item">{{item.text}}</li>
       </ul>
     </div>
-    <div class="chart">
-      <e-chart></e-chart>
-    </div>
+    <e-chart :tab-val="tabDefaultVal"></e-chart>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import EChart from './echart'
+  const TABDAFAULTVAL = 0
 
   export default {
+    data() {
+      return {
+        tabArr: [
+          {
+            text: '柱状',
+            value: 0,
+            tabActive: true
+          },
+          {
+            text: '折线',
+            value: 1,
+            tabActive: false
+          },
+          {
+            text: '饼状',
+            value: 2,
+            tabActive: false
+          }
+        ],
+        tabDefaultVal: TABDAFAULTVAL
+      }
+    },
+    methods: {
+      tabChart(index) {
+        if (index === this.tabArr[index].value) {
+          if (this.tabArr[index].tabActive) {
+            return
+          }
+          for (let i = 0; i < this.tabArr.length; i++) {
+            this.tabArr[i].tabActive = false
+          }
+          this.tabArr[index].tabActive = true
+          this.tabDefaultVal = this.tabArr[index].value
+        }
+      }
+    },
     components: {
       EChart
     }
