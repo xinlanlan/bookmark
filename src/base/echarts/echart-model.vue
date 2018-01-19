@@ -1,17 +1,32 @@
 <template>
   <div class="container">
     <div class="header">
-      <h1 class="title">阅读次数统计图</h1>
+      <h1 class="title">{{title}}</h1>
     </div>
     <div class="tab-chart">
       <ul class="tab-btn-group">
         <li v-for="(item, index) in tabArr" @click="tabChart(index)" :class="{active: item.tabActive}" class="btn-item">{{item.text}}</li>
       </ul>
     </div>
-    <!--<e-chart :tab-val="tabDefaultVal"></e-chart>-->
-    <histogram v-if="tabVal === 0"></histogram>
-    <line-chart v-if="tabVal === 1"></line-chart>
-    <pie-chart v-if="tabVal === 2"></pie-chart>
+    <histogram v-if="tabVal === 0"
+               :legend-name="legendName"
+               :y-axis-text-name="yAxisTextName"
+               :data-text="dataText"
+               :data-arr="dataArr"
+    >
+    </histogram>
+    <line-chart v-if="tabVal === 1"
+                :legend-name="legendName"
+                :y-axis-text-name="yAxisTextName"
+                :data-text="dataText"
+                :data-arr="dataArr">
+    </line-chart>
+    <pie-chart v-if="tabVal === 2"
+               :legend-name="legendName"
+               :y-axis-text-name="yAxisTextName"
+               :data-text="dataText"
+               :data-arr="dataArr">
+    </pie-chart>
   </div>
 </template>
 
@@ -22,6 +37,28 @@
   const TABDAFAULTVAL = 0
 
   export default {
+    props: {
+      title: {
+        type: String,
+        default: '标题'
+      },
+      legendName: {
+        type: String,
+        default: '题头'
+      },
+      yAxisTextName: {
+        type: String,
+        default: 'y轴'
+      },
+      dataText: {
+        type: Array,
+        default: null
+      },
+      dataArr: {
+        type: Array,
+        default: null
+      }
+    },
     data() {
       return {
         tabArr: [

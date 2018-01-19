@@ -8,13 +8,30 @@
   const BARCOLOR = '#03a9f4'
 
   export default {
+    props: {
+      legendName: {
+        type: String,
+        default: '题头'
+      },
+      xAxisTextName: {
+        type: String,
+        default: 'x轴'
+      },
+      yAxisTextName: {
+        type: String,
+        default: 'y轴'
+      },
+      dataText: {
+        type: Array,
+        default: null
+      },
+      dataArr: {
+        type: Array,
+        default: null
+      }
+    },
     data() {
       return {
-        legendName: '考试成绩',
-        xAxisTextName: '',
-        yAxisTextName: '考试成绩',
-        dataText: ['优秀', '良好', '合格', '不合格'],
-        dataArr: [10, 52, 200, 334],
         chart: null
       }
     },
@@ -60,6 +77,11 @@
           ]
         }
         this.chart.setOption(option)
+      }
+    },
+    watch: {
+      dataArr() {
+        this.getHistogram()
       }
     }
   }

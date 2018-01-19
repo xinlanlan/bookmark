@@ -1,8 +1,6 @@
 import axios from 'axios'
 
-/*
- * 获取一级菜单的接口
- */
+// 获取一级菜单的接口
 export function getMenu(configId) {
   const url = '/ebook/departmentConfig/selectDepartmentConfig'
   const data = {

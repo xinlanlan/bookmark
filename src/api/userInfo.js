@@ -1,9 +1,7 @@
 import axios from 'axios'
 import md5 from 'md5'
 
-/*
- * 登陆接口
- */
+// 登陆接口
 export function userLogin(username, pwd) {
   const url = '/ebook/validateUser'
   const data = {
@@ -18,9 +16,7 @@ export function userLogin(username, pwd) {
   })
 }
 
-/*
- * 退出登陆接口
- */
+// 退出登陆接口
 export function logout() {
   const url = '/ebook/logout'
 
@@ -29,9 +25,7 @@ export function logout() {
   })
 }
 
-/*
- * 获取昵称接口
- */
+// 获取昵称接口
 export function getNickname() {
   const url = '/ebook/user/getNeckName'
 
