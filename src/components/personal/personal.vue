@@ -13,56 +13,56 @@
         <span class="icon"></span>
         <span class="text">我的积分</span>
         <span class="point">
-          <i class="arrow"></i>
+          <i class="arrow-rig"></i>
         </span>
       </li>
       <router-link tag="li" class="list-item" to="/statistics">
         <span class="icon"></span>
         <span class="text">统计管理</span>
         <span class="point">
-          <i class="arrow"></i>
+          <i class="arrow-rig"></i>
         </span>
       </router-link>
       <li class="list-item">
         <span class="icon"></span>
         <span class="text">我的错题</span>
         <span class="point">
-          <i class="arrow"></i>
+          <i class="arrow-rig"></i>
         </span>
       </li>
       <li class="list-item">
         <span class="icon"></span>
         <span class="text">我的消息</span>
         <span class="point">
-          <i class="arrow"></i>
+          <i class="arrow-rig"></i>
         </span>
       </li>
       <li class="list-item">
         <span class="icon"></span>
         <span class="text">乔布指数</span>
         <span class="point">
-          <i class="arrow"></i>
+          <i class="arrow-rig"></i>
         </span>
       </li>
       <li class="list-item">
         <span class="icon"></span>
         <span class="text">词库管理</span>
         <span class="point">
-          <i class="arrow"></i>
+          <i class="arrow-rig"></i>
         </span>
       </li>
       <li class="list-item">
         <span class="icon"></span>
         <span class="text">密码修改</span>
         <span class="point">
-          <i class="arrow"></i>
+          <i class="arrow-rig"></i>
         </span>
       </li>
       <li class="list-item">
         <span class="icon"></span>
         <span class="text">意见反馈</span>
         <span class="point">
-          <i class="arrow"></i>
+          <i class="arrow-rig"></i>
         </span>
       </li>
     </ul>
@@ -164,8 +164,8 @@
         float: left
       .point
         float: right
-        .arrow
-          arrow(18px, #000)
+        .arrow-rig
+          arrow-rig(18px, 1px, #000)
   .logout
     margin-top: 17px
     .logout-btn

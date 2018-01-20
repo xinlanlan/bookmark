@@ -10,14 +10,23 @@ no-wrap()
   overflow: hidden
   white-space: nowrap
 
-// 箭头
-arrow($wid, $color)
+// 右箭头
+arrow-rig($wid, $border-wid, $color)
   display: inline-block
   width: $wid
   height: $wid
-  border-right: 1px solid $color
-  border-top: 1px solid $color
+  border-right: $border-wid solid $color
+  border-top: $border-wid solid $color
   transform: rotate(45deg)
+
+// 左箭头
+arrow-left($wid, $border-wid, $color)
+  display: inline-block
+  width: $wid
+  height: $wid
+  border-right: $border-wid solid $color
+  border-top: $border-wid solid $color
+  transform: rotate(-135deg)
 
 // 扩展点击区域
 extend-click()

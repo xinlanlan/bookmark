@@ -1,8 +1,10 @@
 <template>
   <div class="statistics-page">
-    <m-header :data="headerText"></m-header>
+    <m-header :data="headerText" :left-arrow="true" v-on:back-page="backPage"></m-header>
     <tab></tab>
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -14,6 +16,13 @@
     data() {
       return {
         headerText: '统计管理'
+      }
+    },
+    methods: {
+      backPage() {
+        this.$router.push({
+          path: '/personal'
+        })
       }
     },
     components: {
