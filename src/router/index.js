@@ -45,6 +45,13 @@ const StatisticsTest = (resolve) => {
   })
 }
 
+// 智能阅读主页
+const SmartReadDoor = (resolve) => {
+  import('components/smart-read/smart-read-door').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -62,6 +69,10 @@ export default new Router({
     {
       path: '/personal',
       component: Personal
+    },
+    {
+      path: '/bookSearch',
+      component: SmartReadDoor
     },
     {
       path: '/statistics',

@@ -11,7 +11,11 @@
         <div class="icon" :class="[menuIcon[item.name]]"></div>
         <div class="text">{{item.name}}</div>
         <ul class="func" v-if="funcActive[index]" @click.stop>
-          <li v-if="cell.status" v-for="cell in func[index]" class="func-item">{{cell.name}}</li>
+          <li v-if="cell.status"
+              v-for="cell in func[index]"
+              @click="goNextPage(cell.detail)"
+              class="func-item"
+          >{{cell.name}}</li>
         </ul>
       </div>
       <!--<div class="footer-item">
@@ -62,6 +66,12 @@
       this._getMenu(FIRSTCONFIGID)
     },
     methods: {
+      goNextPage(url) {
+        url = url.slice(url.lastIndexOf('/'), url.lastIndexOf('.'))
+        this.$router.push({
+          path: url
+        })
+      },
       _getFunc(configId, index) {
         // 如果点击的是个人中心
         if (index === PERSONALPAGE) {

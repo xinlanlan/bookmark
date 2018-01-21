@@ -3,7 +3,7 @@
     <m-header :data="headerText"></m-header>
     <div class="content">
       <div class="logo">
-        <img class="img" src="./logo.png" alt="">
+        <img class="img" src="../../common/image/logo.png" alt="">
       </div>
       <div class="user-info">
         <div class="item-info">
