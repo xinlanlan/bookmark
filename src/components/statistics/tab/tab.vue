@@ -1,9 +1,9 @@
 <template>
   <div class="tab">
-    <router-link tag="div" class="tab-item" to="/statistics/read">
+    <router-link tag="div" class="tab-item" to="/statistics/read" replace>
       <span class="tab-link">阅读分析</span>
     </router-link>
-    <router-link tag="div" class="tab-item" to="/statistics/test">
+    <router-link tag="div" class="tab-item" to="/statistics/test" replace>
       <span class="tab-link">考试分析</span>
     </router-link>
   </div>

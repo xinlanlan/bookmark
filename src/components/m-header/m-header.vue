@@ -22,7 +22,8 @@
     },
     methods: {
       backLastPage() {
-        this.$emit('back-page')
+        this.$router.go(-1)
+        // this.$emit('back-page')
       }
     }
   }
