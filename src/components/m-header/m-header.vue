@@ -4,6 +4,7 @@
       <span class="arrow-left"></span>
     </div>
     <div class="title">{{data}}</div>
+    <slot></slot>
   </div>
 </template>
 

@@ -29,6 +29,127 @@ body, html
 .aui-mask.aui-mask-out
   opacity: 0
 
+// 单选、多选、开关
+.aui-radio, .aui-checkbox
+  position: relative
+  display: inline-block
+  width: 45px
+  height: 45px
+  background-color: #ffffff
+  border: solid 1px #dddddd
+  border-radius: 50%
+  font-size: 30px
+  vertical-align: top
+  cursor: default
+  user-select: none
+  -webkit-appearance: none
+  transition: background-color ease 0.1s
+
+.aui-checkbox
+  border-radius: 4px
+
+.aui-radio:checked,
+.aui-radio.aui-checked,
+.aui-checkbox:checked,
+.aui-checkbox.aui-checked
+  background-color: $color-theme
+  border: solid 1px $color-theme
+  text-align: center
+  background-clip: padding-box
+
+.aui-radio:checked:before,
+.aui-radio.aui-checked:before,
+.aui-checkbox:checked:before,
+.aui-checkbox.aui-checked:before,
+.aui-radio:checked:after,
+.aui-radio.aui-checked:after,
+.aui-checkbox:checked:after,
+.aui-checkbox.aui-checked:after
+  position: absolute
+  content: ''
+  width: 19px
+  height: 0.3rem
+  top: 50%
+  left: 50%
+  margin-left: -9px
+  margin-top: -9px
+  background: transparent
+  border: 1px solid #ffffff
+  border-top: none
+  border-right: none
+  z-index: 2
+  -webkit-border-radius: 0
+  border-radius: 0
+  transform: rotate(-45deg)
+
+.aui-radio:disabled,
+.aui-radio.aui-disabled,
+.aui-checkbox:disabled,
+.aui-checkbox.aui-disabled
+  background-color: #dddddd
+  border: solid 1px #dddddd
+
+.aui-radio:disabled:before,
+.aui-radio.aui-disabled:before,
+.aui-radio:disabled:after,
+.aui-radio.aui-disabled:after,
+.aui-checkbox:disabled:before,
+.aui-checkbox.aui-disabled:before,
+.aui-checkbox:disabled:after,
+.aui-checkbox.aui-disabled:after
+  position: absolute
+  content: ''
+  width: 19px
+  height: 11px
+  top: 50%
+  left: 50%
+  margin-left: -9px
+  margin-top: -9px
+  background: transparent
+  border: 1px solid #ffffff
+  border-top: none
+  border-right: none
+  z-index: 2
+  -webkit-border-radius: 0
+  border-radius: 0
+  -webkit-transform: rotate(-45deg)
+  transform: rotate(-45deg)
+
+.aui-switch
+  position: relative
+  width: 86px
+  height: 45px
+  vertical-align: top
+  border: 1px solid #dddddd
+  background-color: #dddddd
+  border-radius: 0.6rem
+  display: inline-block
+  outline: none
+  -webkit-appearance: none
+  appearance: none
+  user-select: none
+  box-sizing: border-box
+  background-clip: padding-box
+  transition: all 0.2s linear
+
+.aui-switch:before
+  position: absolute
+  width: 41px
+  height: 41px
+  top: 0
+  left: 0
+  border-radius: 22px
+  background-color: #fff
+  content: ''
+  transition: left 0.2s
+
+.aui-switch:checked
+  border-color: #03a9f4
+  background-color: #03a9f4
+
+.aui-switch:checked:before
+  left: 41px
+
 // dialog
 .aui-dialog
   position: fixed
@@ -84,7 +205,7 @@ body, html
   padding: 0 10px
   font-size: $font-size-medium
   text-align: center
-  color: #59c6c1
+  color: $color-theme
   border-right: 1px solid #dddddd
   white-space: nowrap
   text-overflow: ellipsis

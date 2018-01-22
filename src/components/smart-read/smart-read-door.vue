@@ -53,7 +53,7 @@
         this.$router.push({
           path: '/bookrack',
           query: {
-            userId: '123'
+            type: 0
           }
         })
       }
