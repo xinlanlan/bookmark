@@ -52,6 +52,13 @@ const SmartReadDoor = (resolve) => {
   })
 }
 
+// 公共书架页面
+const Bookrack = (resolve) => {
+  import('components/bookrack/bookrack').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -75,16 +82,20 @@ export default new Router({
       component: SmartReadDoor
     },
     {
+      path: '/bookrack',
+      component: Bookrack
+    },
+    {
       path: '/statistics',
       component: Statistics,
       redirect: '/statistics/read',
       children: [
         {
-          path: '/statistics/read',
+          path: 'read',
           component: StatisticsRead
         },
         {
-          path: '/statistics/test',
+          path: 'test',
           component: StatisticsTest
         }
       ]

@@ -10,10 +10,10 @@
       >
         <div class="icon" :class="[menuIcon[item.name]]"></div>
         <div class="text">{{item.name}}</div>
-        <ul class="func" v-if="funcActive[index]" @click.stop>
+        <ul class="func" v-if="funcActive[index]">
           <li v-if="cell.status"
               v-for="cell in func[index]"
-              @click="goNextPage(cell.detail)"
+              @click.stop="goNextPage(cell.detail)"
               class="func-item"
           >{{cell.name}}</li>
         </ul>

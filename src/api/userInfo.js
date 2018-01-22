@@ -33,3 +33,20 @@ export function getNickname() {
     return Promise.resolve(res.data)
   })
 }
+
+// 统计用户页面停留时长的接口
+export function sendTime() {
+  const url = '/ebook/countInfo/insertCountInfo'
+  const data = {
+    countInfo: 1,
+    remark: '智能阅读时长',
+    countDetail: '0001000002',
+    type: 0
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
