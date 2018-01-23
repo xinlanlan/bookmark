@@ -45,6 +45,13 @@ const StatisticsTest = (resolve) => {
   })
 }
 
+// 公共书架页面
+const Bookrack = (resolve) => {
+  import('components/bookrack/bookrack').then((module) => {
+    resolve(module)
+  })
+}
+
 // 智能阅读主页
 const SmartReadDoor = (resolve) => {
   import('components/smart-read/smart-read-door').then((module) => {
@@ -52,9 +59,9 @@ const SmartReadDoor = (resolve) => {
   })
 }
 
-// 公共书架页面
-const Bookrack = (resolve) => {
-  import('components/bookrack/bookrack').then((module) => {
+// 智能阅读的阅读页面
+const SmartReadPage = (resolve) => {
+  import('components/smart-read/smart-read-page').then((module) => {
     resolve(module)
   })
 }
@@ -78,12 +85,16 @@ export default new Router({
       component: Personal
     },
     {
+      path: '/bookrack',
+      component: Bookrack
+    },
+    {
       path: '/bookSearch',
       component: SmartReadDoor
     },
     {
-      path: '/bookrack',
-      component: Bookrack
+      path: '/smartRead',
+      component: SmartReadPage
     },
     {
       path: '/statistics',

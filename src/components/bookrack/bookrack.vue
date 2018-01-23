@@ -5,7 +5,7 @@
     </m-header>
     <div class="list">
       <label v-for="item in bookListArr" class="list-item">
-        <input :value="item.bookUri" :title="item.bookTitle" v-info="selectBook" class="aui-checkbox" type="checkbox" name="checkbox">
+        <input :value="item.bookUri+'#'+item.bookTitle" v-model="selectBook" class="aui-checkbox" type="checkbox" name="checkbox">
         <img class="item-img" v-lazy="'http://bookmark.xftimes.com'+item.photoCoverImage" alt="">
         <span class="item-text">{{item.bookTitle}}</span>
       </label>
@@ -31,7 +31,17 @@
     methods: {
       // 点击完成所看的书
       sureBtn() {
-        console.log(this.selectBook)
+        let selectBookUri = ''
+        let selectBookName = ''
+        let len = this.selectBook.length
+        for (let i = 0; i < len; i++) {
+          let arrItem = this.selectBook[i].split('#')
+          selectBookUri += arrItem[0] + ','
+          selectBookName += arrItem[1] + ','
+        }
+        sessionStorage.setItem('selectBookUri', selectBookUri.substring(0, selectBookUri.length - 1))
+        sessionStorage.setItem('selectBookName', selectBookName.substring(0, selectBookName.length - 1))
+        this.$router.go(-1)
       },
       // 获取书列表的接口
       _getBookList() {
@@ -39,13 +49,6 @@
           console.log(res)
           this.bookListArr = res.bookList
         })
-      }
-    },
-    directives: {
-      info: {
-        bind (el) {
-          console.log(el.title)
-        }
       }
     },
     components: {
