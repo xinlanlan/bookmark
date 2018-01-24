@@ -19,7 +19,7 @@
             <i class="iconfont icon-pwd"></i>
           </div>
           <div class="user-input">
-            <input v-model="password" type="password" placeholder="请输入密码">
+            <input v-on:keyup.enter="goLogin" v-model="password" type="password" placeholder="请输入密码">
           </div>
         </div>
       </div>

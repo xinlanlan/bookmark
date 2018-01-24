@@ -67,10 +67,16 @@
     },
     methods: {
       goNextPage(url) {
+        let type = url.split('=')[1]
         url = url.slice(url.lastIndexOf('/'), url.lastIndexOf('.'))
-        this.$router.push({
-          path: url
-        })
+        let obj = null
+
+        if (type) {
+          obj = {path: url, query: {type: type}}
+        } else {
+          obj = {path: url}
+        }
+        this.$router.push(obj)
       },
       _getFunc(configId, index) {
         // 如果点击的是个人中心

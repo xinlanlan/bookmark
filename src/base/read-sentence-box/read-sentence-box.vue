@@ -7,14 +7,18 @@
           <div class="sentence-box">
             <div class="sentence-section">
               <h1 class="section-index">---第{{index+1}}句---</h1>
-              <div class="sentence-content">{{item.text}}</div>
+              <div class="sentence-content">
+                <span v-for="cell in item.lastSentence" class="last-sentence-content">{{cell.text}}</span>
+                <span class="important-sentence">{{item.text}}</span>
+                <span v-for="cell in item.nextSentence" class="next-sentence-content" v-html="cell.text"></span>
+              </div>
             </div>
             <div class="book-name">--《{{item.bookName}}》</div>
           </div>
           <div class="get-sentence-arrow"></div>
         </div>
         <ul class="list-footer">
-          <li class="footer-item">
+          <li @click="backOrignSentence(item.uri, index)" class="footer-item">
             <span class="icon iconfont icon-classification"></span>
             <span class="text">回到原文</span>
           </li>
@@ -37,7 +41,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {getKeySentences} from './page'
+  import {getKeySentences, getLastSentence, getNextSentence} from 'api/get-sentence'
 
   export default {
     props: {
@@ -55,9 +59,28 @@
       this._getKeySentences(this.params)
     },
     methods: {
+      // 点击回到原文的时候
+      backOrignSentence(uri, index) {
+        getLastSentence(uri).then((res) => {
+          console.log(res)
+          this.sentenceArr[index].lastSentenceArr = res.returnJson.concat(this.sentenceArr[index].lastSentenceArr)
+        })
+        getNextSentence(uri).then((res) => {
+          console.log(res)
+          this.sentenceArr[index].nextSentenceArr = this.sentenceArr[index].nextSentenceArr.concat(res.returnJson)
+        })
+      },
       _getKeySentences(params) {
         getKeySentences(params).then((res) => {
+          let len = res.list.length
           this.sentenceArr = res.list
+          for (let i = 0; i < len; i++) {
+            this.sentenceArr[i] = Object.assign({}, this.sentenceArr[i], {
+              lastSentenceArr: [],
+              nextSentenceArr: []
+            })
+          }
+          console.log(this.sentenceArr)
         })
       }
     }
@@ -84,7 +107,7 @@
         overflow: scroll
         .section-index
           height: 45px
-          margin-bottom: 37px
+          margin-bottom: 20px
           line-height: 45px
           text-align: left
           font-size: $font-size-medium
@@ -113,10 +136,16 @@
           flex: 1
           height: 45px
           line-height: 45px
+          font-size: 26px
   .bgs_0
     background: url("bgs_0.png") no-repeat left bottom
+    background-size: 100%
   .bgs_1
     background: url("bgs_1.png") no-repeat left bottom
+    background-size: 100%
   .bgs_2
     background: url("bgs_2.png") no-repeat left bottom
+    background-size: 100%
+  .important-sentence
+    font-weight: 700
 </style>

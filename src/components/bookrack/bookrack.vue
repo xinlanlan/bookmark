@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <m-header :data="headerText" :left-arrow="true">
-      <a @click="sureBtn" class="sure-btn"><span>完成</span></a>
+      <a v-if="bookrackType === 0" @click="sureBtn" class="sure-btn"><span>完成</span></a>
     </m-header>
     <div class="list">
-      <label v-for="item in bookListArr" class="list-item">
-        <input :value="item.bookUri+'#'+item.bookTitle" v-model="selectBook" class="aui-checkbox" type="checkbox" name="checkbox">
-        <img class="item-img" v-lazy="'http://bookmark.xftimes.com'+item.photoCoverImage" alt="">
+      <label @click="pandectRead(item.pdfUri)" v-for="item in bookListArr" class="list-item">
+        <input v-if="bookrackType === 0" :value="item.bookUri+'#'+item.bookTitle" v-model="selectBook" class="aui-checkbox" type="checkbox" name="checkbox">
+        <img class="item-img" v-lazy="baseUrl+item.photoCoverImage" alt="">
         <span class="item-text">{{item.bookTitle}}</span>
       </label>
     </div>
@@ -14,18 +14,28 @@
 </template>
 
 <script type="text/ecmascript-6">
+  /*
+   * bookrackType为0的时候是智能阅读，3的时候是全书阅读
+   */
   import MHeader from 'components/m-header/m-header'
+  import {baseUrl} from 'api/config'
   import {getBookList} from './page'
+  import {alertTn} from 'common/js/confirm'
+  const READTYPE_0 = 0 // 智能阅读
+  const READTYPE_3 = 3 // 全书阅读
 
   export default {
     data() {
       return {
         headerText: '我的书架',
         bookListArr: [],
-        selectBook: []
+        selectBook: [],
+        bookrackType: READTYPE_0,
+        baseUrl: baseUrl
       }
     },
     created() {
+      this.bookrackType = parseInt(this.$route.query.type)
       this._getBookList()
     },
     methods: {
@@ -43,6 +53,23 @@
         sessionStorage.setItem('selectBookName', selectBookName.substring(0, selectBookName.length - 1))
         this.$router.go(-1)
       },
+
+      // 点击查看全书阅读的时候
+      pandectRead(pdfUrl) {
+        if (this.bookrackType === READTYPE_3) {
+          if (!pdfUrl) {
+            alertTn('该书没有pdf')
+            return
+          }
+          this.$router.push({
+            path: '/PdfRead',
+            query: {
+              path: pdfUrl
+            }
+          })
+        }
+      },
+
       // 获取书列表的接口
       _getBookList() {
         getBookList().then((res) => {

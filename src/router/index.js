@@ -66,6 +66,13 @@ const SmartReadPage = (resolve) => {
   })
 }
 
+// 全书阅读页面
+const PdfRead = (resolve) => {
+  import('components/pdf/pdf').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -95,6 +102,10 @@ export default new Router({
     {
       path: '/smartRead',
       component: SmartReadPage
+    },
+    {
+      path: '/pdfRead',
+      component: PdfRead
     },
     {
       path: '/statistics',
