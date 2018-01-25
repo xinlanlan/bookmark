@@ -8,9 +8,9 @@
             <div class="sentence-section">
               <h1 class="section-index">---第{{index+1}}句---</h1>
               <div class="sentence-content">
-                <span v-for="cell in item.lastSentence" class="last-sentence-content">{{cell.text}}</span>
+                <span v-for="cell in item.lastSentenceArr" class="last-sentence-content" v-html="cell.text"></span>
                 <span class="important-sentence">{{item.text}}</span>
-                <span v-for="cell in item.nextSentence" class="next-sentence-content" v-html="cell.text"></span>
+                <span v-for="cell in item.nextSentenceArr" class="next-sentence-content" v-html="cell.text"></span>
               </div>
             </div>
             <div class="book-name">--《{{item.bookName}}》</div>
@@ -18,19 +18,20 @@
           <div class="get-sentence-arrow"></div>
         </div>
         <ul class="list-footer">
-          <li @click="backOrignSentence(item.uri, index)" class="footer-item">
+          <!--<li @click="backOrignSentence(item.uri, index)" class="footer-item">-->
+          <li @click="addClass(0, index)" :class="{active: (0 === current.num && index === current.index)}" class="footer-item">
             <span class="icon iconfont icon-classification"></span>
             <span class="text">回到原文</span>
           </li>
-          <li class="footer-item">
+          <li @click="addClass(1, index)" :class="{active: (1 === current.num && index === current.index)}" class="footer-item">
             <span class="icon iconfont icon-marker"></span>
             <span class="text">标记</span>
           </li>
-          <li class="footer-item">
+          <li @click="addClass(2, index)" :class="{active: (2 === current.num && index === current.index)}" class="footer-item">
             <span class="icon iconfont icon-share"></span>
             <span class="text">分享</span>
           </li>
-          <li class="footer-item">
+          <li @click="addClass(3, index)" :class="{active: (3 === current.num && index === current.index)}" class="footer-item">
             <span class="icon iconfont icon-listen"></span>
             <span class="text">听</span>
           </li>
@@ -52,7 +53,8 @@
     },
     data() {
       return {
-        sentenceArr: []
+        sentenceArr: [],
+        current: {num: -1, index: -1}
       }
     },
     created() {
@@ -65,20 +67,27 @@
           console.log(res)
           this.sentenceArr[index].lastSentenceArr = res.returnJson.concat(this.sentenceArr[index].lastSentenceArr)
         })
+
         getNextSentence(uri).then((res) => {
           console.log(res)
           this.sentenceArr[index].nextSentenceArr = this.sentenceArr[index].nextSentenceArr.concat(res.returnJson)
         })
       },
+      // 点击底部tab栏进行切换的时候
+      addClass(num, index) {
+        this.current.num = num
+        this.current.index = index
+      },
+      // 获取重点句子的列表时
       _getKeySentences(params) {
         getKeySentences(params).then((res) => {
           let len = res.list.length
           this.sentenceArr = res.list
           for (let i = 0; i < len; i++) {
-            this.sentenceArr[i] = Object.assign({}, this.sentenceArr[i], {
+            this.sentenceArr.splice(i, 1, Object.assign({}, this.sentenceArr[i], {
               lastSentenceArr: [],
               nextSentenceArr: []
-            })
+            }))
           }
           console.log(this.sentenceArr)
         })
@@ -126,6 +135,8 @@
         flex-direction: column
         text-align: center
         border-top: 1px solid #ddd
+        &.active
+          color: $color-theme
         .icon
           flex: 1
           height: 65px
