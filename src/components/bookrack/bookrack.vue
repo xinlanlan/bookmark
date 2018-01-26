@@ -4,7 +4,7 @@
       <a v-if="bookrackType === 0" @click="sureBtn" class="sure-btn"><span>完成</span></a>
     </m-header>
     <div class="list">
-      <label @click="pandectRead(item.pdfUri)" v-for="item in bookListArr" class="list-item">
+      <label @click="clickItemBook(item.bookUri, item.pdfUri)" v-for="item in bookListArr" class="list-item">
         <input v-if="bookrackType === 0" :value="item.bookUri+'#'+item.bookTitle" v-model="selectBook" class="aui-checkbox" type="checkbox" name="checkbox">
         <img class="item-img" v-lazy="baseUrl+item.photoCoverImage" alt="">
         <span class="item-text">{{item.bookTitle}}</span>
@@ -22,6 +22,7 @@
   import {getBookList} from './page'
   import {alertTn} from 'common/js/confirm'
   const READTYPE_0 = 0 // 智能阅读
+  const READTYPE_2 = 2 // 题库自测
   const READTYPE_3 = 3 // 全书阅读
 
   export default {
@@ -54,8 +55,19 @@
         this.$router.go(-1)
       },
 
-      // 点击查看全书阅读的时候
-      pandectRead(pdfUrl) {
+      // 点击每本书的时候
+      clickItemBook(bookUri, pdfUrl) {
+        // 题库自测
+        if (this.bookrackType === READTYPE_2) {
+          this.$router.push({
+            path: '/questionBank',
+            query: {
+              bookUri: bookUri
+            }
+          })
+          return
+        }
+        // 全书阅读
         if (this.bookrackType === READTYPE_3) {
           if (!pdfUrl) {
             alertTn('该书没有pdf')
@@ -67,6 +79,7 @@
               path: pdfUrl
             }
           })
+          return
         }
       },
 

@@ -73,6 +73,13 @@ const PdfRead = (resolve) => {
   })
 }
 
+// 题库自测
+const QuestionBank = (resolve) => {
+  import('components/question-bank/question-bank').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -106,6 +113,18 @@ export default new Router({
     {
       path: '/pdfRead',
       component: PdfRead
+    },
+    {
+      path: '/questionBank',
+      component: QuestionBank,
+      beforeEnter: (to, from, next) => {
+        let bookUri = to.fullPath.split('=')[1]
+        if (bookUri) {
+          next()
+        } else {
+          next({path: '/bookrack', query: {type: 2}})
+        }
+      }
     },
     {
       path: '/statistics',
