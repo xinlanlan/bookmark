@@ -3,9 +3,11 @@
     <ul class="list">
       <li v-for="(item, index) in sentenceArr" class="list-item">
         <div :class="'bgs_'+(index%3)" class="list-content">
-          <div class="get-sentence-arrow"></div>
-          <div class="sentence-box">
-            <div class="sentence-section">
+          <div class="get-sentence-arrow">
+            <span @click="_getLastSentence(sentenceArr[index].getlastSentenceUri, sentenceArr[index], true)" v-show="item.unfold" class="iconfont icon-top-arrow"></span>
+          </div>
+          <div :class="{unfold: item.unfold}" class="sentence-box">
+            <div :class="{unfold: item.unfold}" class="sentence-section" ref="sentenceSection">
               <h1 class="section-index">---第{{index+1}}句---</h1>
               <div class="sentence-content">
                 <span v-for="cell in item.lastSentenceArr" class="last-sentence-content" v-html="cell.text"></span>
@@ -15,23 +17,38 @@
             </div>
             <div class="book-name">--《{{item.bookName}}》</div>
           </div>
-          <div class="get-sentence-arrow"></div>
+          <div class="get-sentence-arrow">
+            <span @click="_getNextSentence(sentenceArr[index].getNextSentenceUri, sentenceArr[index], true)" v-show="item.unfold" class="iconfont icon-arrow"></span>
+          </div>
         </div>
-        <ul class="list-footer">
+        <ul class="list-footer" @click.stop>
           <!--<li @click="backOrignSentence(item.uri, index)" class="footer-item">-->
-          <li @click="addClass(0, index)" :class="{active: (0 === current.num && index === current.index)}" class="footer-item">
-            <span class="icon iconfont icon-classification"></span>
-            <span class="text">回到原文</span>
+          <li @click="tabFooterItem(0, index, item.uri)" :class="{active: (0 === current.num && index === current.index)}" class="footer-item">
+            <template v-if="item.unfold">
+              <span class="icon iconfont icon-zhankai"></span>
+              <span class="text">收起</span>
+            </template>
+            <template v-else>
+              <span class="icon iconfont icon-classification"></span>
+              <span class="text">回到原文</span>
+            </template>
           </li>
-          <li @click="addClass(1, index)" :class="{active: (1 === current.num && index === current.index)}" class="footer-item">
+          <li @click="tabFooterItem(1, index, item.uri)" :class="{active: (1 === current.num && index === current.index)}" class="footer-item">
             <span class="icon iconfont icon-marker"></span>
             <span class="text">标记</span>
+            <div v-show="(1 === current.num && index === current.index)" class="mark-box">
+              <div class="mark">
+                <span @click.stop="_markSentence(item.uri, 0)" class="mark-good">好句</span>
+                <span @click.stop="_markSentence(item.uri, 1)" class="mark-bad">残句</span>
+              </div>
+              <i class="mark-arrow"></i>
+            </div>
           </li>
-          <li @click="addClass(2, index)" :class="{active: (2 === current.num && index === current.index)}" class="footer-item">
+          <li @click="tabFooterItem(2, index, item.uri)" :class="{active: (2 === current.num && index === current.index)}" class="footer-item">
             <span class="icon iconfont icon-share"></span>
             <span class="text">分享</span>
           </li>
-          <li @click="addClass(3, index)" :class="{active: (3 === current.num && index === current.index)}" class="footer-item">
+          <li @click="tabFooterItem(3, index, item.uri)" :class="{active: (3 === current.num && index === current.index)}" class="footer-item">
             <span class="icon iconfont icon-listen"></span>
             <span class="text">听</span>
           </li>
@@ -43,6 +60,9 @@
 
 <script type="text/ecmascript-6">
   import {getKeySentences, getLastSentence, getNextSentence} from 'api/get-sentence'
+  import {markSentence} from './page'
+  import {ERR_OK} from 'api/config'
+  import {alertTn} from 'common/js/confirm'
 
   export default {
     props: {
@@ -59,24 +79,71 @@
     },
     created() {
       this._getKeySentences(this.params)
+      document.addEventListener('click', (e) => {
+        this.current.index = -1
+      })
     },
     methods: {
-      // 点击回到原文的时候
-      backOrignSentence(uri, index) {
-        getLastSentence(uri).then((res) => {
-          console.log(res)
-          this.sentenceArr[index].lastSentenceArr = res.returnJson.concat(this.sentenceArr[index].lastSentenceArr)
-        })
-
-        getNextSentence(uri).then((res) => {
-          console.log(res)
-          this.sentenceArr[index].nextSentenceArr = this.sentenceArr[index].nextSentenceArr.concat(res.returnJson)
-        })
-      },
       // 点击底部tab栏进行切换的时候
-      addClass(num, index) {
+      tabFooterItem(num, index, uri) {
         this.current.num = num
         this.current.index = index
+        if (num === 0) {
+          this.backOrignSentence(uri, index)
+        }
+      },
+      // 点击回到原文的时候
+      backOrignSentence(uri, index) {
+        let cell = this.sentenceArr[index]
+        // 展开还是收起
+        cell.unfold = !cell.unfold
+        if (cell.unfold) {
+          this._getLastSentence(uri, cell, false)
+          this._getNextSentence(uri, cell)
+        } else {
+          cell.lastSentenceArr = []
+          cell.nextSentenceArr = []
+          cell.getlastSentenceUri = ''
+          cell.lastSentenceArr = ''
+        }
+      },
+      // 上十句,tipOver决定是否提醒有上下文，当点击原文的时候不需要提醒
+      _getLastSentence(uri, cell, tipOver) {
+        if (!uri && tipOver) {
+          alertTn('没有上文了')
+          return
+        }
+        getLastSentence(uri).then((res) => {
+          cell.getlastSentenceUri = res.returnJson[0].uri
+          cell.lastSentenceArr = res.returnJson.concat(cell.lastSentenceArr)
+        })
+      },
+      // 下十句
+      _getNextSentence(uri, cell, tipOver) {
+        if (!uri && tipOver) {
+          alertTn('没有下文了')
+          return
+        }
+        getNextSentence(uri).then((res) => {
+          let d = res.returnJson
+          cell.getNextSentenceUri = d[d.length - 1].uri
+          cell.nextSentenceArr = cell.nextSentenceArr.concat(res.returnJson)
+        })
+      },
+      // 点击标记
+      _markSentence(uri, type) {
+        this.current.index = -1
+        markSentence(uri).then((res) => {
+          if (res.code && res.code === ERR_OK) {
+            if (type === 0) {
+              alertTn('标记好句成功')
+            } else {
+              alertTn('标记残句成功')
+            }
+          } else if (res.errorMessage) {
+            alertTn(res.errorMessage)
+          }
+        })
       },
       // 获取重点句子的列表时
       _getKeySentences(params) {
@@ -86,10 +153,12 @@
           for (let i = 0; i < len; i++) {
             this.sentenceArr.splice(i, 1, Object.assign({}, this.sentenceArr[i], {
               lastSentenceArr: [],
-              nextSentenceArr: []
+              nextSentenceArr: [],
+              getlastSentenceUri: '',
+              getNextSentenceUri: '',
+              unfold: false
             }))
           }
-          console.log(this.sentenceArr)
         })
       }
     }
@@ -109,11 +178,22 @@
       padding: 0 30px
     .get-sentence-arrow
       height: 65px
+      .iconfont
+        display: block
+        height: 100%
+        font-size: 42px
+        text-align: center
     .sentence-box
       height: 342px
+      transition: all 0.5s
+      &.unfold
+        height: 842px
       .sentence-section
         height: 270px
-        overflow: scroll
+        overflow-y: scroll
+        transition: all 0.5s
+        &.unfold
+          height: 770px
         .section-index
           height: 45px
           margin-bottom: 20px
@@ -130,6 +210,7 @@
       flex-direction: row
       height: 110px
       .footer-item
+        position: relative
         flex: 1
         display: flex
         flex-direction: column
@@ -159,4 +240,36 @@
     background-size: 100%
   .important-sentence
     font-weight: 700
+  .mark-box
+    position: absolute
+    width: 188px
+    height: 75px
+    left: 50%
+    bottom: 126px
+    margin-left: -94px
+    z-index: 100
+    background-color: #4e4a4a
+    border-radius: 10px
+    span
+      display: inline-block
+      width: 47%
+      height: 60px
+      line-height: 60px
+      margin-top: 8px
+      color: #fff
+      cursor: pointer
+    .mark-good
+      border-right: 1px solid #fff
+    .mark-arrow
+      position: absolute
+      left: 78px
+      bottom: -15px
+      font-size: 0px
+      border-width: 13px
+      border-bottom-width: 0
+      border-style: dashed
+      border-top-style: solid
+      border-color: #4e4a4a
+      border-left-color: transparent
+      border-right-color: transparent
 </style>
