@@ -9,12 +9,14 @@
       <div class="user-answer-box">
         <textarea class="user-answer"></textarea>
       </div>
+      <topic-footer></topic-footer>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import TopicName from 'base/topic/topic-name'
+  import TopicFooter from 'base/topic/topic-footer'
 
   export default {
     data() {
@@ -27,7 +29,8 @@
       }
     },
     components: {
-      TopicName
+      TopicName,
+      TopicFooter
     }
   }
 </script>
@@ -38,11 +41,11 @@
   .discuss
     background-color: #fff
   .topic-item
-    padding: 0 40px 10px
+    padding: 0 40px 0
     border-bottom: 10px solid #f5f5f5
     .user-answer-box
       height: 274px
-      margin: 12px 0 10px
+      margin: 12px 0 90px
     .user-answer
       height: 100%
       padding: 0 20px

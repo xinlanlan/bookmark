@@ -27,6 +27,6 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .title
-    padding: 30px 40px 36px
+    padding: 30px 40px 0
     background-color: #fff
 </style>

@@ -152,6 +152,7 @@
       padding-right: 22px
       border-bottom: 1px solid #ddd
       background-color: #fff
+      clear: both
       &:active
         background-color: $color-background-active
       &:first-child

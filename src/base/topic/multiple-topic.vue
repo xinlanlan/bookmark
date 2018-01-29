@@ -12,12 +12,14 @@
         <label class="sel-row"><input class="aui-checkbox" type="checkbox" name="radio">&nbsp;&nbsp;C.对</label>
         <label class="sel-row"><input class="aui-checkbox" type="checkbox" name="radio">&nbsp;&nbsp;D.错</label>
       </div>
+      <topic-footer></topic-footer>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import TopicName from 'base/topic/topic-name'
+  import TopicFooter from 'base/topic/topic-footer'
 
   export default {
     data() {
@@ -30,7 +32,8 @@
       }
     },
     components: {
-      TopicName
+      TopicName,
+      TopicFooter
     }
   }
 </script>
@@ -39,10 +42,11 @@
   .multiple
     background-color: #fff
   .topic-item
-    padding: 0 40px 10px
+    padding: 36px 40px 0
     border-bottom: 10px solid #f5f5f5
   .sel-box
     margin-top: 12px
+    padding-bottom: 90px
     .sel-row
       display: block
       height: 72px
