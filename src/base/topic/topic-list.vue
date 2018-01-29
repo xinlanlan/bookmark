@@ -2,9 +2,9 @@
   <div class="topic-list">
 
     <!-- 判断题 -->
-    <div v-if="judgeList.length" class="judge">
-      <topic-name :name="judge.name" :index="judge.index" :num="judgeList.length"></topic-name>
-      <div v-for="(item, index) in judgeList" class="topic-item">
+    <div v-if="totalArr[0].length" class="judge">
+      <topic-name :name="judge.name" :index="judge.index" :num="totalArr[0].length"></topic-name>
+      <div v-for="(item, index) in totalArr[0]" class="topic-item">
         <p class="question-header">
           <span class="question-num">{{index+1}}</span>
           <span class="question-header-text">.{{item.content}}</span>
@@ -19,16 +19,18 @@
                       :bad-number="item.badNumber"
                       :is-like="item.isLike"
                       :uri="item.uri"
+                      :id="item.id"
                       :index="index"
+                      :type-index="0"
         >
         </topic-footer>
       </div>
     </div>
 
     <!-- 单选题 -->
-    <div v-if="radioList.length" class="radio">
-      <topic-name :name="radio.name" :index="radio.index" :num="radioList.length"></topic-name>
-      <div v-for="(item, index) in radioList" class="topic-item">
+    <div v-if="totalArr[1].length" class="radio">
+      <topic-name :name="radio.name" :index="radio.index" :num="totalArr[1].length"></topic-name>
+      <div v-for="(item, index) in totalArr[1]" class="topic-item">
         <p class="question-header">
           <span class="question-num">{{index+1}}</span>
           <span class="question-header-text">.{{item.content}}</span>
@@ -42,14 +44,16 @@
                       :bad-number="item.badNumber"
                       :is-like="item.isLike"
                       :uri="item.uri"
+                      :id="item.id"
                       :index="index"
+                      :type-index="1"
         >
         </topic-footer>
       </div>
     </div>
 
     <!-- 多选题 -->
-    <div v-if="multipleList.length" class="multiple">
+    <!--<div v-if="totalArr[2].length" class="multiple">
       <topic-name :name="multiple.name" :index="multiple.index" :num="multipleList.num"></topic-name>
       <div class="topic-item">
         <p class="question-header">
@@ -64,12 +68,12 @@
         </div>
         <topic-footer></topic-footer>
       </div>
-    </div>
+    </div>-->
 
     <!-- 简答题 -->
-    <div v-if="sketchList.length" class="sketch">
-      <topic-name :name="sketch.name" :index="sketch.index" :num="sketchList.length"></topic-name>
-      <div v-for="(item, index) in sketchList" class="topic-item">
+    <div v-if="totalArr[3].length" class="sketch">
+      <topic-name :name="sketch.name" :index="sketch.index" :num="totalArr[3].length"></topic-name>
+      <div v-for="(item, index) in totalArr[3]" class="topic-item">
         <p class="question-header">
           <span class="question-num">{{index+1}}</span>
           <span class="question-header-text">.{{item.content}}</span>
@@ -83,14 +87,16 @@
                       :bad-number="item.badNumber"
                       :is-like="item.isLike"
                       :uri="item.uri"
+                      :id="item.id"
                       :index="index"
+                      :type-index="3"
         >
         </topic-footer>
       </div>
     </div>
 
     <!-- 论述题 -->
-    <div v-if="discussList.length" class="discuss">
+    <!--<div v-if="totalArr[4].length" class="discuss">
       <topic-name :name="discuss.name" :index="discuss.index" :num="discussList.num"></topic-name>
       <div class="topic-item">
         <p class="question-header">
@@ -102,7 +108,7 @@
         </div>
         <topic-footer></topic-footer>
       </div>
-    </div>
+    </div>-->
 
     <!-- 弹窗 -->
     <know-dialog v-on:close-dialog="closeDialog" :show="showDialog" :uri="byUri"></know-dialog>
@@ -116,25 +122,9 @@
 
   export default {
     props: {
-      judgeList: {
+      totalArr: {
         type: Array,
-        default: null
-      },
-      radioList: {
-        type: Array,
-        default: null
-      },
-      multipleList: {
-        type: Array,
-        default: null
-      },
-      sketchList: {
-        type: Array,
-        default: null
-      },
-      discussList: {
-        type: Array,
-        default: null
+        default: []
       }
     },
     data() {
@@ -166,13 +156,41 @@
       }
     },
     methods: {
-      listenFooter(index, obj) {
-        console.log(index)
+      listenFooter(obj) {
         // 查看知识点的事件派发
         if (obj.uri) {
           this.showDialog = true
           this.byUri = obj.uri
           return
+        }
+        // 已会不会事件派发
+        if (obj.learn === 0 || obj.learn) {
+          let index = obj.index
+          let typeIndex = obj.typeIndex
+          this.totalArr[typeIndex][index].learn = obj.learn
+        }
+        // 点赞和点踩事件派发
+        if (obj.isLike || obj.isLike === 0) {
+          let index = obj.index
+          let typeIndex = obj.typeIndex
+          let oType = obj.oType
+          this.totalArr[typeIndex][index].isLike = obj.isLike
+          if (oType === 0 && this.isLike === 0) {
+            this.totalArr[typeIndex][index].goodNumber += 1
+            return
+          }
+          if (oType === 0 && this.isLike === 1) {
+            this.totalArr[typeIndex][index].goodNumber -= 1
+            return
+          }
+          if (oType === 1 && this.isLike === 2) {
+            this.totalArr[typeIndex][index].badNumber += 1
+            return
+          }
+          if (oType === 1 && this.isLike === 1) {
+            this.totalArr[typeIndex][index].badNumber -= 1
+            return
+          }
         }
       },
       closeDialog() {

@@ -2,15 +2,15 @@
   <div class="topic-footer">
     <div class="know-search">
       <span @click="getSentenceByUri(uri)" class="search-sentence">查看知识点</span>
-      <span @click="changeMeet(uri)" :class="{active: learn === 1}" class="meet">已会</span>
+      <span @click="changeMeet(id)" :class="{active: learn === 1}" class="meet">已会</span>
     </div>
     <div class="footer">
       <div class="footer-item"></div>
-      <div :class="{active: isLike === 0}" class="footer-item">
+      <div @click="changeLike(id, 0)" :class="{active: isLike === 0}" class="footer-item">
         <i class="iconfont icon-zan"></i>
         <span>{{goodNumber}}</span>
       </div>
-      <div :class="{active: isLike === 2}" class="footer-item">
+      <div @click="changeLike(id, 1)" :class="{active: isLike === 2}" class="footer-item">
         <i class="iconfont icon-cai"></i>
         <span>{{badNumber}}</span>
       </div>
@@ -21,6 +21,7 @@
 <script type="text/ecmascript-6">
   import {updateEmpQuestion} from './page'
   import {ERR_OK} from 'api/config'
+  import {alertTn} from 'common/js/confirm'
 
   export default {
     props: {
@@ -44,41 +45,107 @@
         type: String,
         default: ''
       },
+      id: {
+        type: String,
+        default: ''
+      },
       index: {
+        type: Number,
+        default: 0
+      },
+      typeIndex: {
         type: Number,
         default: 0
       }
     },
     data() {
       return {
-        learnOver: true   // 已会不会开关（返回成功才可以点击下一次）
+        learnVal: 0,
+        learnOver: true,   // 已会不会开关（返回成功才可以点击下一次）
+        isLikeVal: 0,
+        isLikeOver: true
       }
     },
     methods: {
+      // 点击回到原文
       getSentenceByUri(uri) {
         this.$emit('listen-footer', {
           uri: uri
         })
       },
       // 改变已会不会状态
-      changeMeet(uri) {
+      changeMeet(id) {
         if (this.learnOver) {
           this.learnOver = false
-          let learnVal = 0
           if (this.learn === 0) {
-            learnVal = 1
+            this.learnVal = 1
           } else {
-            learnVal = 0
+            this.learnVal = 0
           }
+          this.$emit('listen-footer', {
+            learn: this.learnVal,
+            typeIndex: this.typeIndex,
+            index: this.index
+          })
           updateEmpQuestion({
-            questionId: uri,
-            questionStatus: learnVal
+            questionId: id,
+            questionStatus: this.learnVal
           }).then((res) => {
             if (res.code === ERR_OK) {
               this.learnOver = true
             }
           })
         }
+      },
+      // 改变喜欢不喜欢(oType为0时表示点击赞按钮，为1时表示点击踩按钮)
+      changeLike(id, oType) {
+        if (this.isLikeOver) {
+          this.isLikeOver = false
+          if (oType === 0 && this.isLike === 2) {
+            alertTn('您已经踩过该题，请取消上次操作才能继续本次操作哟')
+            this.isLikeOver = true
+            return
+          }
+          if (oType === 1 && this.isLike === 0) {
+            alertTn('您已经赞过该题，请取消上次操作才能继续本次操作哟')
+            this.isLikeOver = true
+            return
+          }
+          if (oType === 0 && this.isLike === 0) {
+            this.isLikeVal = 1
+          }
+          if (oType === 0 && this.isLike === 1) {
+            this.isLikeVal = 0
+          }
+          if (oType === 1 && this.isLike === 2) {
+            this.isLikeVal = 1
+          }
+          if (oType === 1 && this.isLike === 1) {
+            this.isLikeVal = 2
+          }
+          this.$emit('listen-footer', {
+            isLike: this.isLikeVal,
+            typeIndex: this.typeIndex,
+            index: this.index,
+            oType: oType
+          })
+          updateEmpQuestion({
+            questionId: id,
+            questionLike: this.isLikeVal
+          }).then((res) => {
+            if (res.code === ERR_OK) {
+              this.isLikeOver = true
+            }
+          })
+        }
+      }
+    },
+    watch: {
+      learn() {
+        this.learnVal = this.learn
+      },
+      isLike() {
+        this.isLikeVal = this.isLike
       }
     }
   }

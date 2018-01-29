@@ -1,20 +1,20 @@
 <template>
-  <div v-show="show" class="know-dialog">
-    <div class="aui-mask aui-mask-in"></div>
-    <div class="aui-dialog aui-dialog-in">
+  <div v-show="show" class="know-dialog1">
+    <div class="aui-mask1 aui-mask-in1"></div>
+    <div class="aui-dialog1 aui-dialog-in1">
       <div @click="closeDialog" class="aui-close-btn">
         <i class="iconfont icon-close"></i>
       </div>
-      <div class="aui-dialog-header">知识点</div>
-      <div class="aui-dialog-body">
+      <div class="aui-dialog-header1">知识点</div>
+      <div class="aui-dialog-body1">
         <span v-for="item in lastSentence">{{item.text}}</span>
         <span style="font-weight: 800">{{text}}</span>
         <span v-for="item in nextSentence">{{item.text}}</span>
       </div>
       <div class="aui-dialog-name">《{{name}}》</div>
-      <div class="aui-dialog-footer">
-        <div @click="_getLastSentence" class="aui-dialog-btn">上十句</div>
-        <div @click="_getNextSentence" class="aui-dialog-btn">下十句</div>
+      <div class="aui-dialog-footer1">
+        <div @click="_getLastSentence" class="aui-dialog-btn1">上十句</div>
+        <div @click="_getNextSentence" class="aui-dialog-btn1">下十句</div>
       </div>
     </div>
   </div>
@@ -93,7 +93,7 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 
-  .aui-dialog
+  .aui-dialog1
     width: 544px
     margin-left: -272px
     top: 20%
@@ -105,9 +105,9 @@
     cursor: pointer
     .iconfont
       font-size: 37px
-  .aui-dialog-header
+  .aui-dialog-header1
     height: 55px
-  .aui-dialog-body
+  .aui-dialog-body1
     max-height: 506px
     margin-top: 10px
     padding: 0 28px
