@@ -4,31 +4,20 @@
       <span class="iconfont icon-upload upload-save"></span>
     </m-header>
     <pull-list class="pull-list"></pull-list>
-    <!-- 判断题 -->
-    <judge-topic v-if="judgeList.length" :data="judgeList"></judge-topic>
-
-    <!-- 单选题 -->
-    <radio-topic v-if="radioList.length" :data="radioList"></radio-topic>
-
-    <!-- 多选题 -->
-    <multiple-topic v-if="multipleList.length" :data="multipleList"></multiple-topic>
-
-    <!-- 简答题 -->
-    <sketch-topic v-if="sketchList.length" :data="sketchList"></sketch-topic>
-
-    <!-- 论述题 -->
-    <discuss-topic v-if="discussList.length" :data="discussList"></discuss-topic>
+    <topic-list :judgeList="judgeList"
+                :radioList="radioList"
+                :multipleList="multipleList"
+                :sketchList="sketchList"
+                :discussList="discussList"
+    >
+    </topic-list>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import MHeader from 'components/m-header/m-header'
   import PullList from 'base/pull-list/pull-list'
-  import JudgeTopic from 'base/topic/judge-topic'
-  import RadioTopic from 'base/topic/radio-topic'
-  import MultipleTopic from 'base/topic/multiple-topic'
-  import SketchTopic from 'base/topic/sketch-topic'
-  import DiscussTopic from 'base/topic/discuss-topic'
+  import TopicList from 'base/topic/topic-list'
   import {getQuestionList} from './page'
   const OTYPE_0 = 0   // 判断题
   const OTYPE_1 = 1   // 单选题
@@ -81,11 +70,7 @@
     components: {
       MHeader,
       PullList,
-      JudgeTopic,
-      RadioTopic,
-      MultipleTopic,
-      SketchTopic,
-      DiscussTopic
+      TopicList
     }
   }
 </script>
