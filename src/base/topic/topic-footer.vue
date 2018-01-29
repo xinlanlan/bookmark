@@ -1,8 +1,8 @@
 <template>
   <div class="topic-footer">
     <div class="know-search">
-      <span class="search-sentence">查看知识点</span>
-      <span :class="{active: learn === 1}" class="meet">已会</span>
+      <span @click="getSentenceByUri(uri)" class="search-sentence">查看知识点</span>
+      <span @click="changeMeet(uri)" :class="{active: learn === 1}" class="meet">已会</span>
     </div>
     <div class="footer">
       <div class="footer-item"></div>
@@ -19,6 +19,9 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {updateEmpQuestion} from './page'
+  import {ERR_OK} from 'api/config'
+
   export default {
     props: {
       learn: {
@@ -36,6 +39,46 @@
       isLike: {
         type: Number,
         default: 1
+      },
+      uri: {
+        type: String,
+        default: ''
+      },
+      index: {
+        type: Number,
+        default: 0
+      }
+    },
+    data() {
+      return {
+        learnOver: true   // 已会不会开关（返回成功才可以点击下一次）
+      }
+    },
+    methods: {
+      getSentenceByUri(uri) {
+        this.$emit('listen-footer', {
+          uri: uri
+        })
+      },
+      // 改变已会不会状态
+      changeMeet(uri) {
+        if (this.learnOver) {
+          this.learnOver = false
+          let learnVal = 0
+          if (this.learn === 0) {
+            learnVal = 1
+          } else {
+            learnVal = 0
+          }
+          updateEmpQuestion({
+            questionId: uri,
+            questionStatus: learnVal
+          }).then((res) => {
+            if (res.code === ERR_OK) {
+              this.learnOver = true
+            }
+          })
+        }
       }
     }
   }

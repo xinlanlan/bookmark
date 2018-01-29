@@ -1,5 +1,5 @@
 <template>
-  <div v-show="showDialog" class="know-dialog">
+  <div v-show="show" class="know-dialog">
     <div class="aui-mask aui-mask-in"></div>
     <div class="aui-dialog aui-dialog-in">
       <div @click="closeDialog" class="aui-close-btn">
@@ -7,37 +7,85 @@
       </div>
       <div class="aui-dialog-header">知识点</div>
       <div class="aui-dialog-body">
-        <span>在企业责任杂志基于环境、经济和社会价值方面的表现的100家最佳企业公民中，持续位列榜首。</span>
+        <span v-for="item in lastSentence">{{item.text}}</span>
+        <span style="font-weight: 800">{{text}}</span>
+        <span v-for="item in nextSentence">{{item.text}}</span>
       </div>
-      <div class="aui-dialog-name">《微软案例之高管薪酬》</div>
+      <div class="aui-dialog-name">《{{name}}》</div>
       <div class="aui-dialog-footer">
-        <div class="aui-dialog-btn">上十句</div>
-        <div class="aui-dialog-btn">下十句</div>
+        <div @click="_getLastSentence" class="aui-dialog-btn">上十句</div>
+        <div @click="_getNextSentence" class="aui-dialog-btn">下十句</div>
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import {getSentenceByUri, getLastSentence, getNextSentence} from 'api/get-sentence'
+  import {alertTn} from 'common/js/confirm'
 
   export default {
     props: {
       show: {
         type: Boolean,
         default: false
+      },
+      uri: {
+        type: String,
+        default: ''
       }
     },
     data() {
       return {
-        showDialog: false
+        name: '',
+        text: '',
+        getLastSentenceUri: '',
+        getNextSentenceUri: '',
+        lastSentence: [],
+        nextSentence: []
       }
     },
-    created() {
-      this.showDialog = this.show
-    },
     methods: {
+      // 获取原文句子
+      _getSentenceByUri(uri) {
+        getSentenceByUri(uri).then((res) => {
+          this.name = res.name
+          this.text = res.text
+        })
+      },
+      // 获取上十句
+      _getLastSentence() {
+        getLastSentence(this.getLastSentenceUri).then((res) => {
+          let len = res.returnJson
+          if (len === 0) {
+            alertTn('没有上文了')
+          }
+          this.getLastSentenceUri = res.returnJson[0].uri
+          this.lastSentence = res.returnJson.concat(this.lastSentence)
+        })
+      },
+      // 获取下十句
+      _getNextSentence() {
+        getNextSentence(this.getNextSentenceUri).then((res) => {
+          let len = res.returnJson
+          if (len === 0) {
+            alertTn('没有下文了')
+          }
+          this.getNextSentenceUri = res.returnJson[res.returnJson.length - 1].uri
+          this.nextSentence = this.nextSentence.concat(res.returnJson)
+        })
+      },
       closeDialog() {
-        this.showDialog = false
+        this.$emit('close-dialog')
+      }
+    },
+    watch: {
+      uri() {
+        this.getLastSentenceUri = this.uri
+        this.getNextSentenceUri = this.uri
+        this.lastSentence = []
+        this.nextSentence = []
+        this._getSentenceByUri(this.uri)
       }
     }
   }

@@ -12,6 +12,20 @@ export function getKeySentences(params) {
   })
 }
 
+// 根据句子的uri获取句子
+export function getSentenceByUri(uri) {
+  const url = '/ebook/book/getSentenceByUri'
+  const data = {
+    uri: uri
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
 // 获取上十句的接口
 export function getLastSentence(uri) {
   const url = '/ebook/book/getPreNearbySentences'

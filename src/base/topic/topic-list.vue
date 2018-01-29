@@ -1,5 +1,6 @@
 <template>
   <div class="topic-list">
+
     <!-- 判断题 -->
     <div v-if="judgeList.length" class="judge">
       <topic-name :name="judge.name" :index="judge.index" :num="judgeList.length"></topic-name>
@@ -12,9 +13,18 @@
           <label class="sel-row"><input class="aui-radio" type="radio" name="radio">&nbsp;&nbsp;A.对</label>
           <label class="sel-row"><input class="aui-radio" type="radio" name="radio">&nbsp;&nbsp;B.错</label>
         </div>
-        <topic-footer :learn="item.learn" :good-number="item.goodNumber" :bad-number="item.badNumber" :is-like="item.isLike"></topic-footer>
+        <topic-footer v-on:listen-footer="listenFooter"
+                      :learn="item.learn"
+                      :good-number="item.goodNumber"
+                      :bad-number="item.badNumber"
+                      :is-like="item.isLike"
+                      :uri="item.uri"
+                      :index="index"
+        >
+        </topic-footer>
       </div>
     </div>
+
     <!-- 单选题 -->
     <div v-if="radioList.length" class="radio">
       <topic-name :name="radio.name" :index="radio.index" :num="radioList.length"></topic-name>
@@ -26,9 +36,18 @@
         <div class="sel-box">
           <label v-for="cell in item.optionList" class="sel-row"><input class="aui-radio" type="radio" name="radio">&nbsp;&nbsp;{{cell.option + '.' + cell.content}}</label>
         </div>
-        <topic-footer :learn="item.learn" :good-number="item.goodNumber" :bad-number="item.badNumber" :is-like="item.isLike"></topic-footer>
+        <topic-footer v-on:listen-footer="listenFooter"
+                      :learn="item.learn"
+                      :good-number="item.goodNumber"
+                      :bad-number="item.badNumber"
+                      :is-like="item.isLike"
+                      :uri="item.uri"
+                      :index="index"
+        >
+        </topic-footer>
       </div>
     </div>
+
     <!-- 多选题 -->
     <div v-if="multipleList.length" class="multiple">
       <topic-name :name="multiple.name" :index="multiple.index" :num="multipleList.num"></topic-name>
@@ -46,6 +65,7 @@
         <topic-footer></topic-footer>
       </div>
     </div>
+
     <!-- 简答题 -->
     <div v-if="sketchList.length" class="sketch">
       <topic-name :name="sketch.name" :index="sketch.index" :num="sketchList.length"></topic-name>
@@ -57,9 +77,18 @@
         <div class="user-answer-box">
           <textarea class="user-answer"></textarea>
         </div>
-        <topic-footer :learn="item.learn" :good-number="item.goodNumber" :bad-number="item.badNumber" :is-like="item.isLike"></topic-footer>
+        <topic-footer v-on:listen-footer="listenFooter"
+                      :learn="item.learn"
+                      :good-number="item.goodNumber"
+                      :bad-number="item.badNumber"
+                      :is-like="item.isLike"
+                      :uri="item.uri"
+                      :index="index"
+        >
+        </topic-footer>
       </div>
     </div>
+
     <!-- 论述题 -->
     <div v-if="discussList.length" class="discuss">
       <topic-name :name="discuss.name" :index="discuss.index" :num="discussList.num"></topic-name>
@@ -74,12 +103,16 @@
         <topic-footer></topic-footer>
       </div>
     </div>
+
+    <!-- 弹窗 -->
+    <know-dialog v-on:close-dialog="closeDialog" :show="showDialog" :uri="byUri"></know-dialog>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import TopicName from 'base/topic/topic-name'
   import TopicFooter from 'base/topic/topic-footer'
+  import KnowDialog from 'base/know-dialog/know-dialog'
 
   export default {
     props: {
@@ -106,6 +139,8 @@
     },
     data() {
       return {
+        showDialog: false,
+        byUri: '',
         judge: {
           index: '一',
           name: '判断题'
@@ -130,9 +165,24 @@
         }
       }
     },
+    methods: {
+      listenFooter(index, obj) {
+        console.log(index)
+        // 查看知识点的事件派发
+        if (obj.uri) {
+          this.showDialog = true
+          this.byUri = obj.uri
+          return
+        }
+      },
+      closeDialog() {
+        this.showDialog = false
+      }
+    },
     components: {
       TopicName,
-      TopicFooter
+      TopicFooter,
+      KnowDialog
     }
   }
 </script>
