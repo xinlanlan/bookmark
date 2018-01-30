@@ -10,56 +10,56 @@
     <!-- 功能列表 -->
     <ul class="list">
       <li class="list-item">
-        <span class="icon"></span>
+        <span class="icon iconfont icon-code"></span>
         <span class="text">我的积分</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
       </li>
       <router-link tag="li" class="list-item" to="/statistics">
-        <span class="icon"></span>
+        <span class="icon iconfont icon-statistic"></span>
         <span class="text">统计管理</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
       </router-link>
       <li class="list-item">
-        <span class="icon"></span>
+        <span class="icon iconfont icon-mistakes"></span>
         <span class="text">我的错题</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
       </li>
       <li class="list-item">
-        <span class="icon"></span>
+        <span class="icon iconfont icon-msg"></span>
         <span class="text">我的消息</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
       </li>
       <li class="list-item">
-        <span class="icon"></span>
+        <span class="icon iconfont icon-exponent"></span>
         <span class="text">乔布指数</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
       </li>
       <li class="list-item">
-        <span class="icon"></span>
+        <span class="icon iconfont icon-ci"></span>
         <span class="text">词库管理</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
       </li>
       <li class="list-item">
-        <span class="icon"></span>
+        <span class="icon iconfont icon-psd"></span>
         <span class="text">密码修改</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
       </li>
       <li class="list-item">
-        <span class="icon"></span>
+        <span class="icon iconfont icon-feedback"></span>
         <span class="text">意见反馈</span>
         <span class="point">
           <i class="arrow-rig"></i>
@@ -161,6 +161,8 @@
         float: left
         width: 98px
         height: 85px
+        line-height: 85px
+        text-align: center
       .text
         float: left
       .point
@@ -181,4 +183,38 @@
       cursor: pointer
       &:active
         background-color: $color-background-active
+
+  /* 图标样式 */
+  .icon-code
+    padding-top: 2px
+    font-size: 36px
+    color: #fb8672
+  .icon-statistic
+    padding-top: 4px
+    font-size: 46px
+    color: #fec985
+  .icon-mistakes
+    padding-top: 0
+    font-size: 30px
+    color: #ff8767
+  .icon-msg
+    padding-top: 2px
+    font-size: 34px
+    color: #93df97
+  .icon-exponent
+    padding-top: 0
+    font-size: 52px
+    color: #3099fb
+  .icon-ci
+    padding-top: 0
+    font-size: 30px
+    color: #ffd49e
+  .icon-psd
+    padding-top: 0
+    font-size: 36px
+    color: #847ed6
+  .icon-feedback
+    padding-top: 0
+    font-size: 36px
+    color: #ff8a74
 </style>
