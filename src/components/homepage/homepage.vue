@@ -1,6 +1,6 @@
 <template>
   <div class="homepage">
-    <div class="footer">
+    <div class="footer" @click.stop>
       <div v-if="item.status"
            @click="_getFunc(item.configId, index)"
            v-for="(item, index) in menu"
@@ -64,6 +64,11 @@
     },
     created() {
       this._getMenu(FIRSTCONFIGID)
+      document.addEventListener('click', (e) => {
+        for (let i = 0; i < this.funcActive.length; i++) {
+          this.funcActive.splice(i, 1, false)
+        }
+      })
     },
     methods: {
       goNextPage(url) {
