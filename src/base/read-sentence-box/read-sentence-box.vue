@@ -109,23 +109,23 @@
       },
       // 上十句,tipOver决定是否提醒有上下文，当点击原文的时候不需要提醒
       _getLastSentence(uri, cell, tipOver) {
-        if (!uri && tipOver) {
-          alertTn('没有上文了')
-          return
-        }
         getLastSentence(uri).then((res) => {
+          if (res.returnJson.length === 0 && tipOver) {
+            alertTn('没有上文了')
+            return
+          }
           cell.getlastSentenceUri = res.returnJson[0].uri
           cell.lastSentenceArr = res.returnJson.concat(cell.lastSentenceArr)
         })
       },
       // 下十句
       _getNextSentence(uri, cell, tipOver) {
-        if (!uri && tipOver) {
-          alertTn('没有下文了')
-          return
-        }
         getNextSentence(uri).then((res) => {
           let d = res.returnJson
+          if (d.length === 0 && tipOver) {
+            alertTn('没有下文了')
+            return
+          }
           cell.getNextSentenceUri = d[d.length - 1].uri
           cell.nextSentenceArr = cell.nextSentenceArr.concat(res.returnJson)
         })
@@ -170,6 +170,7 @@
 
   .content
     padding: 20px 26px 0
+    background-color: $color-highlight-background
   .list-item
     margin-bottom: 26px
     background-color: #fff

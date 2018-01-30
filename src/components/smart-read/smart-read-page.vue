@@ -17,7 +17,6 @@
     },
     computed: {
       getSentenceParam() {
-        console.log(this.$route.query)
         let params = {
           uri: sessionStorage.getItem('selectBookUri'),
           count: this.$route.query.sentenceNum,

@@ -21,9 +21,10 @@
   import {baseUrl} from 'api/config'
   import {getBookList} from './page'
   import {alertTn} from 'common/js/confirm'
-  const READTYPE_0 = 0 // 智能阅读
-  const READTYPE_2 = 2 // 题库自测
-  const READTYPE_3 = 3 // 全书阅读
+  const READTYPE_0 = 0    // 智能阅读
+  const READTYPE_2 = 2    // 题库自测
+  const READTYPE_3 = 3    // 全书阅读
+  const READTYPE_10 = 10  // 图表阅读
 
   export default {
     data() {
@@ -80,6 +81,15 @@
             }
           })
           return
+        }
+        // 图表阅读
+        if (this.bookrackType === READTYPE_10) {
+          this.$router.push({
+            path: '/imgRead',
+            query: {
+              bookUri: bookUri
+            }
+          })
         }
       },
 

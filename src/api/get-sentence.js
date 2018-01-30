@@ -53,3 +53,15 @@ export function getNextSentence(uri) {
     return Promise.resolve(res.data)
   })
 }
+
+// 图表阅读获取重点图片
+export function getImportImg(params) {
+  const url = '/ebook/book/getPicture'
+  const data = params
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
