@@ -4,7 +4,13 @@
       <span class="iconfont icon-upload upload-save"></span>
     </m-header>
     <pull-list class="pull-list"></pull-list>
-    <topic-list :totalArr="totalArr"></topic-list>
+    <topic-list :judgeList="judgeList"
+                :radioList="radioList"
+                :multipleList="multipleList"
+                :sketchList="sketchList"
+                :discussList="discussList"
+    >
+    </topic-list>
   </div>
 </template>
 
@@ -24,7 +30,6 @@
     data() {
       return {
         headerText: '题库自测',
-        totalArr: [],
         judgeList: [],
         radioList: [],
         multipleList: [],
@@ -59,11 +64,6 @@
               this.gapList.push(data[i])
             }
           }
-          this.totalArr.push(this.judgeList)
-          this.totalArr.push(this.radioList)
-          this.totalArr.push(this.multipleList)
-          this.totalArr.push(this.sketchList)
-          this.totalArr.push(this.discussList)
         })
       }
     },
