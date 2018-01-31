@@ -17,34 +17,6 @@ const Homepage = (resolve) => {
   })
 }
 
-// 个人中心
-const Personal = (resolve) => {
-  import('components/personal/personal').then((module) => {
-    resolve(module)
-  })
-}
-
-// 统计管理
-const Statistics = (resolve) => {
-  import('components/statistics/statistics').then((module) => {
-    resolve(module)
-  })
-}
-
-// 统计管理的阅读子组件
-const StatisticsRead = (resolve) => {
-  import('components/statistics/read/read').then((module) => {
-    resolve(module)
-  })
-}
-
-// 统计管理的考试子组件
-const StatisticsTest = (resolve) => {
-  import('components/statistics/test/test').then((module) => {
-    resolve(module)
-  })
-}
-
 // 公共书架页面
 const Bookrack = (resolve) => {
   import('components/bookrack/bookrack').then((module) => {
@@ -97,6 +69,41 @@ const ImgRead = (resolve) => {
 // 题库自测
 const QuestionBank = (resolve) => {
   import('components/question-bank/question-bank').then((module) => {
+    resolve(module)
+  })
+}
+
+// 个人中心
+const Personal = (resolve) => {
+  import('components/personal/personal').then((module) => {
+    resolve(module)
+  })
+}
+
+// 统计管理
+const Statistics = (resolve) => {
+  import('components/statistics/statistics').then((module) => {
+    resolve(module)
+  })
+}
+
+// 统计管理的阅读子组件
+const StatisticsRead = (resolve) => {
+  import('components/statistics/read/read').then((module) => {
+    resolve(module)
+  })
+}
+
+// 统计管理的考试子组件
+const StatisticsTest = (resolve) => {
+  import('components/statistics/test/test').then((module) => {
+    resolve(module)
+  })
+}
+
+// 修改密码
+const UpdatePsd = (resolve) => {
+  import('components/update-psd/update-psd').then((module) => {
     resolve(module)
   })
 }
@@ -173,6 +180,10 @@ export default new Router({
           component: StatisticsTest
         }
       ]
+    },
+    {
+      path: '/update-psd',
+      component: UpdatePsd
     }
   ]
 })

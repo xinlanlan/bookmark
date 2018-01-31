@@ -16,6 +16,21 @@ export function userLogin(username, pwd) {
   })
 }
 
+// 修改密码接口
+export function updatePsd(psd, newPsd) {
+  const url = '/ebook/updatePassword'
+  const data = {
+    oldPassword: psd,
+    newPassword: newPsd
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
 // 退出登陆接口
 export function logout() {
   const url = '/ebook/logout'

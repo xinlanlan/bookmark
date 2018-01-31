@@ -8,64 +8,64 @@
       <p class="nickname">{{nickname}}</p>
     </div>
     <!-- 功能列表 -->
-    <ul class="list">
-      <li class="list-item">
+    <div class="list">
+      <a class="list-item">
         <span class="icon iconfont icon-code"></span>
         <span class="text">我的积分</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
-      </li>
-      <router-link tag="li" class="list-item" to="/statistics">
+      </a>
+      <router-link tag="a" class="list-item" to="/statistics">
         <span class="icon iconfont icon-statistic"></span>
         <span class="text">统计管理</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
       </router-link>
-      <li class="list-item">
+      <a class="list-item">
         <span class="icon iconfont icon-mistakes"></span>
         <span class="text">我的错题</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
-      </li>
-      <li class="list-item">
+      </a>
+      <a class="list-item">
         <span class="icon iconfont icon-msg"></span>
         <span class="text">我的消息</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
-      </li>
-      <li class="list-item">
+      </a>
+      <a class="list-item">
         <span class="icon iconfont icon-exponent"></span>
         <span class="text">乔布指数</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
-      </li>
-      <li class="list-item">
+      </a>
+      <a class="list-item">
         <span class="icon iconfont icon-ci"></span>
         <span class="text">词库管理</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
-      </li>
-      <li class="list-item">
+      </a>
+      <router-link tag="a" class="list-item" to="/update-psd">
         <span class="icon iconfont icon-psd"></span>
         <span class="text">密码修改</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
-      </li>
-      <li class="list-item">
+      </router-link>
+      <a class="list-item" href="https://www.sojump.hk/jq/15633830.aspx">
         <span class="icon iconfont icon-feedback"></span>
         <span class="text">意见反馈</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
-      </li>
-    </ul>
+      </a>
+    </div>
 
     <!-- 退出登陆 -->
     <div class="logout">
@@ -147,6 +147,7 @@
   .list
     margin-top: 17px
     .list-item
+      display: block
       height: 85px
       line-height: 85px
       padding-right: 22px

@@ -137,11 +137,11 @@
       // 上十句,tipOver决定是否提醒有上下文，当点击原文的时候不需要提醒
       _getLastSentence(uri, cell, tipOver) {
         getLastSentence(uri).then((res) => {
-          if (res.returnJson.length === 0) {
-            return
-          }
           if (res.returnJson.length === 0 && tipOver) {
             alertTn('没有上文了')
+            return
+          }
+          if (res.returnJson.length === 0) {
             return
           }
           cell.getlastSentenceUri = res.returnJson[0].uri
@@ -152,11 +152,11 @@
       _getNextSentence(uri, cell, tipOver) {
         getNextSentence(uri).then((res) => {
           let d = res.returnJson
-          if (d.length === 0) {
-            return
-          }
           if (d.length === 0 && tipOver) {
             alertTn('没有下文了')
+            return
+          }
+          if (d.length === 0) {
             return
           }
           cell.getNextSentenceUri = d[d.length - 1].uri
@@ -233,12 +233,12 @@
         font-size: 42px
         text-align: center
     .sentence-box
-      height: 342px
+      height: 402px
       transition: all 0.5s
       &.unfold
         height: 842px
       .sentence-section
-        height: 270px
+        height: 330px
         overflow-y: scroll
         transition: all 0.5s
         &.unfold

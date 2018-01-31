@@ -11,6 +11,7 @@
     </div>
     <!-- 排序筛选 -->
     <div class="filter-box">
+      <div class="total-num">总共 {{totalNum}} 条</div>
       <div class="filter">
         <div @click="tabFrequency" :class="{active: sortType === 2}" class="frequency">
           <i class="iconfont icon-frequency"></i>
@@ -47,7 +48,7 @@
 <script type="text/ecmascript-6">
   import MHeader from 'components/m-header/m-header'
   import {ERR_OK} from 'api/config'
-  import {getAllWord} from './page'
+  import {getAllWord, getWordCount} from 'api/get-word'
 
   export default {
     data() {
@@ -58,7 +59,8 @@
         sort: 1,
         firstWordSort: 1,
         sortType: 2,
-        wordArr: []
+        wordArr: [],
+        totalNum: 0
       }
     },
     computed: {
@@ -71,6 +73,7 @@
     },
     created() {
       this._getAllWord()
+      this._getWordCount()
     },
     methods: {
       // 点击频次的时候
@@ -98,6 +101,7 @@
           }
         })
       },
+      // 获取所有词的接口
       _getAllWord() {
         let params = {
           start: this.start,
@@ -111,6 +115,14 @@
           if (res.code === ERR_OK) {
             console.log(res)
             this.wordArr = this.wordArr.concat(res.list)
+          }
+        })
+      },
+      // 获取总条数
+      _getWordCount() {
+        getWordCount(this.bookUriList).then((res) => {
+          if (res.code === ERR_OK) {
+            this.totalNum = res.count
           }
         })
       }
@@ -142,6 +154,13 @@
   .filter-box
     margin-top: 30px
     overflow: hidden
+  .total-num
+    float: left
+    line-height: 60px
+    padding-left: 30px
+    font-size: 32px
+    font-style: italic
+    color: $color-theme
   .filter
     float: right
     margin-right: 30px
@@ -164,6 +183,7 @@
         color: #fff
   .word-list
     margin-top: 15px
+    clear: both
     .list-item
       display: flex
       height: 84px
