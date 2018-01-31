@@ -73,6 +73,20 @@ const PdfRead = (resolve) => {
   })
 }
 
+// 词库阅读词页面
+const WordReadDoor = (resolve) => {
+  import('components/word-read/word-read-door').then((module) => {
+    resolve(module)
+  })
+}
+
+// 词库阅读阅读页面
+const WordRead = (resolve) => {
+  import('components/word-read/word-read').then((module) => {
+    resolve(module)
+  })
+}
+
 // 图表阅读页面
 const ImgRead = (resolve) => {
   import('components/imgRead/imgRead').then((module) => {
@@ -120,6 +134,14 @@ export default new Router({
     {
       path: '/pdfRead',
       component: PdfRead
+    },
+    {
+      path: '/wordReadDoor',
+      component: WordReadDoor
+    },
+    {
+      path: '/wordRead',
+      component: WordRead
     },
     {
       path: '/imgRead',

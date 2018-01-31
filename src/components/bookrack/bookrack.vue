@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <m-header :data="headerText" :left-arrow="true">
-      <a v-if="bookrackType === 0" @click="sureBtn" class="sure-btn"><span>完成</span></a>
+      <a v-if="bookrackType === 0 || bookrackType === 9" @click="sureBtn" class="sure-btn"><span>完成</span></a>
     </m-header>
     <div class="list">
       <label @click="clickItemBook(item.bookUri, item.pdfUri, item.bookTitle)" v-for="item in bookListArr" class="list-item">
-        <input v-if="bookrackType === 0" :value="item.bookUri+'#'+item.bookTitle" v-model="selectBook" class="aui-checkbox" type="checkbox" name="checkbox">
+        <input v-if="bookrackType === 0 || bookrackType === 9" :value="item.bookUri+'#'+item.bookTitle" v-model="selectBook" class="aui-checkbox" type="checkbox" name="checkbox">
         <img class="item-img" v-lazy="baseUrl+item.photoCoverImage" alt="">
         <span class="item-text">{{item.bookTitle}}</span>
       </label>
@@ -24,6 +24,7 @@
   const READTYPE_0 = 0    // 智能阅读
   const READTYPE_2 = 2    // 题库自测
   const READTYPE_3 = 3    // 全书阅读
+  const READTYPE_9 = 9    // 词库阅读
   const READTYPE_10 = 10  // 图表阅读
 
   export default {
@@ -53,9 +54,18 @@
         }
         sessionStorage.setItem('selectBookUri', selectBookUri.substring(0, selectBookUri.length - 1))
         sessionStorage.setItem('selectBookName', selectBookName.substring(0, selectBookName.length - 1))
-        this.$router.go(-1)
+        // 智能阅读
+        if (this.bookrackType === READTYPE_0) {
+          this.$router.go(-1)
+          return
+        }
+        // 词库阅读
+        if (this.bookrackType === READTYPE_9) {
+          this.$router.push({
+            path: '/wordReadDoor'
+          })
+        }
       },
-
       // 点击每本书的时候
       clickItemBook(bookUri, pdfUrl, bookName) {
         // 题库自测
@@ -91,6 +101,7 @@
               bookName: bookName
             }
           })
+          return
         }
       },
 
