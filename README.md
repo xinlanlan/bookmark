@@ -1,6 +1,6 @@
 # vue-music
 
-> 书签项目实践
+> 乔布阅读2.0
 
 ## Build Setup
 
