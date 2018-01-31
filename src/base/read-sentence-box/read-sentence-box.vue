@@ -162,10 +162,14 @@
         this.current.index = -1
         markSentence(uri).then((res) => {
           if (res.code && res.code === ERR_OK) {
-            if (type === 0) {
+            if (type === 0 && this.type === 0) {
               alertTn('标记好句成功')
-            } else {
+            } else if (type === 1 && this.type === 0) {
               alertTn('标记残句成功')
+            } else if (type === 0 && this.type === 1) {
+              alertTn('标记好图成功')
+            } else if (type === 1 && this.type === 1) {
+              alertTn('标记残图成功')
             }
           } else if (res.errorMessage) {
             alertTn(res.errorMessage)
