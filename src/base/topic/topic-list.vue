@@ -55,18 +55,25 @@
     <!-- 多选题 -->
     <div v-if="multipleList.length" class="multiple">
       <topic-name :name="multiple.name" :index="multiple.index" :num="multipleList.num"></topic-name>
-      <div class="topic-item">
+      <div v-for="(item, index) in multipleList" class="topic-item">
         <p class="question-header">
-          <span class="question-num">2</span>
-          <span class="question-header-text">.在企业责任杂志基于环境、经济和社会价值方面的表现的85家最佳企业公民中，持续位列榜首。</span>
+          <span class="question-num">{{index+1}}</span>
+          <span class="question-header-text">.{{item.content}}</span>
         </p>
         <div class="sel-box">
-          <label class="sel-row"><input class="aui-checkbox" type="checkbox" name="radio">&nbsp;&nbsp;A.对</label>
-          <label class="sel-row"><input class="aui-checkbox" type="checkbox" name="radio">&nbsp;&nbsp;B.错</label>
-          <label class="sel-row"><input class="aui-checkbox" type="checkbox" name="radio">&nbsp;&nbsp;C.对</label>
-          <label class="sel-row"><input class="aui-checkbox" type="checkbox" name="radio">&nbsp;&nbsp;D.错</label>
+          <label v-for="cell in item.optionList" class="sel-row"><input class="aui-checkbox" type="checkbox" name="radio">&nbsp;&nbsp;{{cell.option + '.' + cell.content}}</label>
         </div>
-        <topic-footer></topic-footer>
+        <topic-footer v-on:listen-footer="listenFooter"
+                      :learn="item.learn"
+                      :good-number="item.goodNumber"
+                      :bad-number="item.badNumber"
+                      :is-like="item.isLike"
+                      :uri="item.uri"
+                      :id="item.id"
+                      :index="index"
+                      :type-index="2"
+        >
+        </topic-footer>
       </div>
     </div>
 
@@ -98,15 +105,25 @@
     <!-- 论述题 -->
     <div v-if="discussList.length" class="discuss">
       <topic-name :name="discuss.name" :index="discuss.index" :num="discussList.num"></topic-name>
-      <div class="topic-item">
+      <div v-for="(item, index) in discussList" class="topic-item">
         <p class="question-header">
-          <span class="question-num">5</span>
-          <span class="question-header-text">.在企业责任杂志基于环境、经济和社会价值方面的表现的85家最佳企业公民中，持续位列榜首。</span>
+          <span class="question-num">{{index+1}}</span>
+          <span class="question-header-text">.{{item.content}}</span>
         </p>
         <div class="user-answer-box">
           <textarea class="user-answer"></textarea>
         </div>
-        <topic-footer></topic-footer>
+        <topic-footer v-on:listen-footer="listenFooter"
+                      :learn="item.learn"
+                      :good-number="item.goodNumber"
+                      :bad-number="item.badNumber"
+                      :is-like="item.isLike"
+                      :uri="item.uri"
+                      :id="item.id"
+                      :index="index"
+                      :type-index="4"
+        >
+        </topic-footer>
       </div>
     </div>
 

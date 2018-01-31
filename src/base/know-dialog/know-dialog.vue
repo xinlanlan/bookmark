@@ -118,5 +118,5 @@
     padding-right: 30px
     font-size: 24px
     text-align: right
-    padding-bottom: 19px
+    padding: 19px
 </style>

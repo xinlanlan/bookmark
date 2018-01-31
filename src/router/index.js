@@ -73,6 +73,13 @@ const PdfRead = (resolve) => {
   })
 }
 
+// 图表阅读页面
+const ImgRead = (resolve) => {
+  import('components/imgRead/imgRead').then((module) => {
+    resolve(module)
+  })
+}
+
 // 题库自测
 const QuestionBank = (resolve) => {
   import('components/question-bank/question-bank').then((module) => {
@@ -113,6 +120,10 @@ export default new Router({
     {
       path: '/pdfRead',
       component: PdfRead
+    },
+    {
+      path: '/imgRead',
+      component: ImgRead
     },
     {
       path: '/questionBank',

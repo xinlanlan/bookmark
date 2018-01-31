@@ -127,7 +127,7 @@
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
   .personal-page
-    min-height: 100%
+    height: 100vh
     background-color: $color-highlight-background
   .user-info
     background: linear-gradient(#65c1bc, #a6d8d7)

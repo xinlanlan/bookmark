@@ -3,7 +3,11 @@
     <m-header :data="headerText" :leftArrow="true">
       <span class="iconfont icon-upload upload-save"></span>
     </m-header>
+
+    <!-- 下拉筛选 -->
     <pull-list class="pull-list"></pull-list>
+
+    <!-- 试题列表 -->
     <topic-list :judgeList="judgeList"
                 :radioList="radioList"
                 :multipleList="multipleList"
@@ -11,6 +15,11 @@
                 :discussList="discussList"
     >
     </topic-list>
+
+    <!-- 交卷按钮 -->
+    <div v-if="showBtn" class="upload-test">
+      <a @click="uploadTest" class="upload-btn">交卷</a>
+    </div>
   </div>
 </template>
 
@@ -35,13 +44,18 @@
         multipleList: [],
         sketchList: [],
         discussList: [],
-        gapList: []
+        gapList: [],
+        showBtn: false
       }
     },
     created() {
       this._getQuestionList()
     },
     methods: {
+      // 点击交卷的方法
+      uploadTest() {
+        console.log(this.judgeList)
+      },
       // 获取试题列表接口
       _getQuestionList() {
         let uri = this.$route.query.bookUri
@@ -49,6 +63,7 @@
           console.log(res)
           let data = res.list
           let len = data.length
+          this.showBtn = true
           for (let i = 0; i < len; i++) {
             if (data[i].type === OTYPE_0) {
               this.judgeList.push(data[i])
@@ -92,4 +107,16 @@
     color: #fff
   .pull-list
     margin-bottom: 8px
+  .upload-test
+    padding: 30px
+    background-color: #fff
+    .upload-btn
+      display: block
+      height: 90px
+      line-height: 90px
+      font-size: 34px
+      text-align: center
+      border-radius: 12px
+      background-color: $color-theme
+      color: #fff
 </style>
