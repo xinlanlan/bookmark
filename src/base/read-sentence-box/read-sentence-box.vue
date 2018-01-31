@@ -8,14 +8,31 @@
           </div>
           <div :class="{unfold: item.unfold}" class="sentence-box">
             <div :class="{unfold: item.unfold}" class="sentence-section" ref="sentenceSection">
-              <h1 class="section-index">---第{{index+1}}句---</h1>
+              <h1 v-if="type === 0" class="section-index">---第{{index+1}}句---</h1>
               <div class="sentence-content">
-                <span v-for="cell in item.lastSentenceArr" class="last-sentence-content" v-html="cell.text"></span>
-                <span class="important-sentence">{{item.text}}</span>
-                <span v-for="cell in item.nextSentenceArr" class="next-sentence-content" v-html="cell.text"></span>
+                <!-- 上十句 -->
+                <span v-if="cell.src" v-for="cell in item.lastSentenceArr" class="last-sentence-content">
+                  <img class="img" :src="'http://bookmark.xftimes.com/i' + cell.src " alt="">
+                  <i class="text">{{cell.text}}</i>
+                </span>
+                <span v-else class="last-sentence-content" v-text="cell.text"></span>
+
+                <!-- 重点句子 -->
+                <span v-if="item.src" class="important-sentence">
+                  <img class="img" :src="'http://bookmark.xftimes.com/i' + item.src " alt="">
+                  <i class="text">{{item.text}}</i>
+                </span>
+                <span v-else class="important-sentence" v-text="item.text"></span>
+
+                <!-- 下十句 -->
+                <span v-if="cell.src" v-for="cell in item.nextSentenceArr" class="next-sentence-content" v-html="cell.text">
+                  <img class="img" :src="'http://bookmark.xftimes.com/i' + cell.src " alt="">
+                  <i class="text">{{cell.text}}</i>
+                </span>
+                <span v-else class="next-sentence-content" v-text="cell.text"></span>
               </div>
             </div>
-            <div class="book-name">--《{{item.bookName}}》</div>
+            <div class="book-name">--《{{item.bookName ? item.bookName : bookName}}》</div>
           </div>
           <div class="get-sentence-arrow">
             <span @click="_getNextSentence(sentenceArr[index].getNextSentenceUri, sentenceArr[index], true)" v-show="item.unfold" class="iconfont icon-arrow"></span>
@@ -59,7 +76,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {getKeySentences, getLastSentence, getNextSentence} from 'api/get-sentence'
+  import {getKeySentences, getLastSentence, getNextSentence, getImportImg} from 'api/get-sentence'
   import {markSentence} from './page'
   import {ERR_OK} from 'api/config'
   import {alertTn} from 'common/js/confirm'
@@ -69,16 +86,25 @@
       params: {
         type: Object,
         default: null
+      },
+      type: {
+        type: Number,
+        default: 0
       }
     },
     data() {
       return {
         sentenceArr: [],
-        current: {num: -1, index: -1}
+        current: {num: -1, index: -1},
+        bookName: this.$route.query.bookName
       }
     },
     created() {
-      this._getKeySentences(this.params)
+      if (this.type === 0) {
+        this._getKeySentences(this.params)
+      } else if (this.type === 1) {
+        this._getImportImg(this.params)
+      }
       document.addEventListener('click', (e) => {
         this.current.index = -1
       })
@@ -148,18 +174,28 @@
       // 获取重点句子的列表时
       _getKeySentences(params) {
         getKeySentences(params).then((res) => {
-          let len = res.list.length
-          this.sentenceArr = res.list
-          for (let i = 0; i < len; i++) {
-            this.sentenceArr.splice(i, 1, Object.assign({}, this.sentenceArr[i], {
-              lastSentenceArr: [],
-              nextSentenceArr: [],
-              getlastSentenceUri: '',
-              getNextSentenceUri: '',
-              unfold: false
-            }))
-          }
+          this.handleImportFunc(res.list)
         })
+      },
+      // 获取重点图片的方法
+      _getImportImg(params) {
+        getImportImg(params).then((res) => {
+          this.handleImportFunc(res.returnJson)
+        })
+      },
+      // 处理重点图片和重点句子的公共方法
+      handleImportFunc(data) {
+        let len = data.length
+        this.sentenceArr = data
+        for (let i = 0; i < len; i++) {
+          this.sentenceArr.splice(i, 1, Object.assign({}, this.sentenceArr[i], {
+            lastSentenceArr: [],
+            nextSentenceArr: [],
+            getlastSentenceUri: '',
+            getNextSentenceUri: '',
+            unfold: false
+          }))
+        }
       }
     }
   }
@@ -230,6 +266,22 @@
           height: 45px
           line-height: 45px
           font-size: 26px
+
+  /* 盒子中有图片的情况 */
+  .sentence-content
+    .img
+      width: 100%
+      padding-top: 15px
+    .text
+      display: inline-block
+      width: 100%
+      padding: 10px 0 15px
+      text-align: center
+      font-style: normal
+    .important-sentence
+      display: inline-block
+      font-weight: 700
+  /* 背景图 */
   .bgs_0
     background: url("bgs_0.png") no-repeat left bottom
     background-size: 100%
@@ -239,8 +291,7 @@
   .bgs_2
     background: url("bgs_2.png") no-repeat left bottom
     background-size: 100%
-  .important-sentence
-    font-weight: 700
+  /* 标记的弹窗 */
   .mark-box
     position: absolute
     width: 188px

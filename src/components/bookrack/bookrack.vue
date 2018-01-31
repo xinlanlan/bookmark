@@ -4,7 +4,7 @@
       <a v-if="bookrackType === 0" @click="sureBtn" class="sure-btn"><span>完成</span></a>
     </m-header>
     <div class="list">
-      <label @click="clickItemBook(item.bookUri, item.pdfUri)" v-for="item in bookListArr" class="list-item">
+      <label @click="clickItemBook(item.bookUri, item.pdfUri, item.bookTitle)" v-for="item in bookListArr" class="list-item">
         <input v-if="bookrackType === 0" :value="item.bookUri+'#'+item.bookTitle" v-model="selectBook" class="aui-checkbox" type="checkbox" name="checkbox">
         <img class="item-img" v-lazy="baseUrl+item.photoCoverImage" alt="">
         <span class="item-text">{{item.bookTitle}}</span>
@@ -57,7 +57,7 @@
       },
 
       // 点击每本书的时候
-      clickItemBook(bookUri, pdfUrl) {
+      clickItemBook(bookUri, pdfUrl, bookName) {
         // 题库自测
         if (this.bookrackType === READTYPE_2) {
           this.$router.push({
@@ -87,7 +87,8 @@
           this.$router.push({
             path: '/imgRead',
             query: {
-              bookUri: bookUri
+              bookUri: bookUri,
+              bookName: bookName
             }
           })
         }
