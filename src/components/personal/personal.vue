@@ -186,35 +186,27 @@
 
   /* 图标样式 */
   .icon-code
-    padding-top: 2px
     font-size: 36px
     color: #fb8672
   .icon-statistic
-    padding-top: 4px
     font-size: 46px
     color: #fec985
   .icon-mistakes
-    padding-top: 0
     font-size: 30px
     color: #ff8767
   .icon-msg
-    padding-top: 2px
     font-size: 34px
     color: #93df97
   .icon-exponent
-    padding-top: 0
     font-size: 52px
     color: #3099fb
   .icon-ci
-    padding-top: 0
-    font-size: 30px
+    font-size: 32px
     color: #ffd49e
   .icon-psd
-    padding-top: 0
     font-size: 36px
     color: #847ed6
   .icon-feedback
-    padding-top: 0
     font-size: 36px
     color: #ff8a74
 </style>
