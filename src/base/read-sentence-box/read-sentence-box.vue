@@ -12,21 +12,21 @@
               <div class="sentence-content">
                 <!-- 上十句 -->
                 <span v-if="cell.src" v-for="cell in item.lastSentenceArr" class="last-sentence-content">
-                  <img class="img" :src="'http://bookmark.xftimes.com/i' + cell.src " alt="">
+                  <img class="img" :src="imgBaseUrl + cell.src " alt="">
                   <i class="text">{{cell.text}}</i>
                 </span>
                 <span v-else class="last-sentence-content" v-text="cell.text"></span>
 
                 <!-- 重点句子 -->
                 <span v-if="item.src" class="important-sentence">
-                  <img class="img" :src="'http://bookmark.xftimes.com/i' + item.src " alt="">
+                  <img class="img" :src="imgBaseUrl + item.src " alt="">
                   <i class="text">{{item.text}}</i>
                 </span>
                 <span v-else class="important-sentence" v-text="item.text"></span>
 
                 <!-- 下十句 -->
                 <span v-if="cell.src" v-for="cell in item.nextSentenceArr" class="next-sentence-content" v-html="cell.text">
-                  <img class="img" :src="'http://bookmark.xftimes.com/i' + cell.src " alt="">
+                  <img class="img" :src="imgBaseUrl + cell.src " alt="">
                   <i class="text">{{cell.text}}</i>
                 </span>
                 <span v-else class="next-sentence-content" v-text="cell.text"></span>
@@ -78,7 +78,7 @@
 <script type="text/ecmascript-6">
   import {getKeySentences, getLastSentence, getNextSentence, getImportImg} from 'api/get-sentence'
   import {markSentence} from './page'
-  import {ERR_OK} from 'api/config'
+  import {ERR_OK, imgBaseUrl} from 'api/config'
   import {alertTn} from 'common/js/confirm'
 
   export default {
@@ -96,7 +96,8 @@
       return {
         sentenceArr: [],
         current: {num: -1, index: -1},
-        bookName: this.$route.query.bookName
+        bookName: this.$route.query.bookName,
+        imgBaseUrl: imgBaseUrl
       }
     },
     created() {
