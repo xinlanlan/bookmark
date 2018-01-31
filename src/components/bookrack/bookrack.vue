@@ -97,7 +97,6 @@
       // 获取书列表的接口
       _getBookList() {
         getBookList().then((res) => {
-          console.log(res)
           this.bookListArr = res.bookList
         })
       }

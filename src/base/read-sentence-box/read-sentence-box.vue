@@ -12,21 +12,21 @@
               <div class="sentence-content">
                 <!-- 上十句 -->
                 <span v-if="cell.src" v-for="cell in item.lastSentenceArr" class="last-sentence-content">
-                  <img class="img" :src="imgBaseUrl + cell.src " alt="">
+                  <img class="img" v-lazy="imgBaseUrl + cell.src " alt="">
                   <i class="text">{{cell.text}}</i>
                 </span>
                 <span v-else class="last-sentence-content" v-text="cell.text"></span>
 
                 <!-- 重点句子 -->
                 <span v-if="item.src" class="important-sentence">
-                  <img class="img" :src="imgBaseUrl + item.src " alt="">
+                  <img class="img" v-lazy="imgBaseUrl + item.src " alt="">
                   <i class="text">{{item.text}}</i>
                 </span>
                 <span v-else class="important-sentence" v-text="item.text"></span>
 
                 <!-- 下十句 -->
                 <span v-if="cell.src" v-for="cell in item.nextSentenceArr" class="next-sentence-content" v-html="cell.text">
-                  <img class="img" :src="imgBaseUrl + cell.src " alt="">
+                  <img class="img" v-lazy="imgBaseUrl + cell.src " alt="">
                   <i class="text">{{cell.text}}</i>
                 </span>
                 <span v-else class="next-sentence-content" v-text="cell.text"></span>
