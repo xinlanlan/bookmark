@@ -1,6 +1,7 @@
 <template>
   <div class="word-read">
     <m-header :data="headerText" :leftArrow="true"></m-header>
+    <!-- 所选书的名字 -->
     <div class="name">
       <p class="book-name-par" v-for="item in bookName">
         <span class="symbol">《</span>
@@ -8,6 +9,7 @@
         <span class="symbol">》</span>
       </p>
     </div>
+    <!-- 排序筛选 -->
     <div class="filter-box">
       <div class="filter">
         <div @click="tabFrequency" :class="{active: sortType === 2}" class="frequency">
@@ -22,13 +24,14 @@
         </div>
       </div>
     </div>
+    <!-- 词列表 -->
     <div class="word-list">
       <div class="list-item header">
         <span class="keywords">关键词</span>
         <span class="frequency">频次</span>
         <span class="todo">操作</span>
       </div>
-      <div v-for="item in wordArr" class="list-item">
+      <div @click="goReadPage(item.bookUriList, item.word, item.numbers)" v-for="item in wordArr" class="list-item">
         <span class="keywords">{{item.word}}</span>
         <span class="frequency">{{item.numbers}}次</span>
         <span class="todo">
@@ -70,24 +73,37 @@
       this._getAllWord()
     },
     methods: {
+      // 点击频次的时候
       tabFrequency() {
         this.sortType = 2
         this.sort === 1 ? this.sort = '' : this.sort = 1
         this.wordArr = []
         this._getAllWord()
       },
+      // 点击首字母排序
       tabLetter() {
         this.sortType = 1
         this.firstWordSort === 1 ? this.firstWordSort = '' : this.firstWordSort = 1
         this.wordArr = []
         this._getAllWord()
       },
+      // 去阅读页面
+      goReadPage(uri, keywords, count) {
+        this.$router.push({
+          path: '/wordRead',
+          query: {
+            uri: uri,
+            keywords: keywords,
+            count: count
+          }
+        })
+      },
       _getAllWord() {
         let params = {
           start: this.start,
           end: this.end,
           sort: this.sort,
-          firstWordSort: '',
+          firstWordSort: this.firstWordSort,
           sortType: this.sortType,
           bookUriList: this.bookUriList
         }

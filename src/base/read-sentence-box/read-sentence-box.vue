@@ -137,6 +137,9 @@
       // 上十句,tipOver决定是否提醒有上下文，当点击原文的时候不需要提醒
       _getLastSentence(uri, cell, tipOver) {
         getLastSentence(uri).then((res) => {
+          if (res.returnJson.length === 0) {
+            return
+          }
           if (res.returnJson.length === 0 && tipOver) {
             alertTn('没有上文了')
             return
@@ -149,6 +152,9 @@
       _getNextSentence(uri, cell, tipOver) {
         getNextSentence(uri).then((res) => {
           let d = res.returnJson
+          if (d.length === 0) {
+            return
+          }
           if (d.length === 0 && tipOver) {
             alertTn('没有下文了')
             return
@@ -208,6 +214,7 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import '~common/stylus/variable'
+  @import "~common/stylus/mixin"
 
   .content
     padding: 20px 26px 0
@@ -245,7 +252,9 @@
           font-weight: 800
       .book-name
         height: 72px
+        padding-left: 20px
         line-height: 72px
+        no-wrap()
         text-align: right
     .list-footer
       display: flex
