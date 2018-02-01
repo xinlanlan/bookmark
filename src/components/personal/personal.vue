@@ -9,13 +9,13 @@
     </div>
     <!-- 功能列表 -->
     <div class="list">
-      <a class="list-item">
+      <router-link tag="a" class="list-item" to="/my-code">
         <span class="icon iconfont icon-code"></span>
         <span class="text">我的积分</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
-      </a>
+      </router-link>
       <router-link tag="a" class="list-item" to="/statistics">
         <span class="icon iconfont icon-statistic"></span>
         <span class="text">统计管理</span>
@@ -152,6 +152,7 @@
       line-height: 85px
       padding-right: 22px
       border-bottom: 1px solid #ddd
+      color: #000
       background-color: #fff
       clear: both
       &:active

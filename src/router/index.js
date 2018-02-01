@@ -80,6 +80,13 @@ const Personal = (resolve) => {
   })
 }
 
+// 我的积分
+const MyCode = (resolve) => {
+  import('components/my-code/my-code').then((module) => {
+    resolve(module)
+  })
+}
+
 // 统计管理
 const Statistics = (resolve) => {
   import('components/statistics/statistics').then((module) => {
@@ -165,6 +172,10 @@ export default new Router({
           next({path: '/bookrack', query: {type: 2}})
         }
       }
+    },
+    {
+      path: '/my-code',
+      component: MyCode
     },
     {
       path: '/statistics',
