@@ -75,7 +75,7 @@ export function getPersonalReadScore(startTime, endTime) {
   })
 }
 
-// 获取职位积分详情的接口
+// 获取职位绩效积分详情的接口
 export function getPersonalPositionScore(startTime, endTime) {
   const url = '/ebook/countInfo/selectPresonalJixiaoScoreCountInfo'
   const data = {

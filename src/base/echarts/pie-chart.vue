@@ -86,6 +86,11 @@
         }
         return arr
       }
+    },
+    watch: {
+      dataArr() {
+        this.getPie()
+      }
     }
   }
 </script>

@@ -71,6 +71,11 @@
         }
         this.chart.setOption(option)
       }
+    },
+    watch: {
+      dataArr() {
+        this.getLineChart()
+      }
     }
   }
 </script>
