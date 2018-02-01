@@ -23,12 +23,3 @@ export function removeClass(el, className) {
     el.className = newClass.join(' ')
   }
 }
-
-// 获取当前天的前n天日期
-export function getDayStr(num) {
-  let dd = new Date()
-  dd.setDate(dd.getDate() + num)
-  let m = (dd.getMonth() + 1) < 10 ? '0' + (dd.getMonth() + 1) : (dd.getMonth() + 1)
-  let d = dd.getDate() < 10 ? '0' + (dd.getDate()) : dd.getDate()
-  return `${m}月${d}日`
-}

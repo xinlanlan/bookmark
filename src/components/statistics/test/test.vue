@@ -1,10 +1,6 @@
 <template>
   <div class="test">
-    <total :total-time-text="totalTestTimeText"
-           :total-num-text="totalTestNumText"
-           :total-time="totalTime"
-           :total-num="totalNum"
-    ></total>
+    <total :data="totalInfo"></total>
     <div class="chart">
       <!-- 仿真测试统计结果 -->
       <div class="chart-item">
@@ -43,21 +39,20 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Total from '../total/total'
+  import Total from 'base/statistics/total'
   import EchartModel from 'base/echarts/echart-model'
   import LineHistogram from 'base/echarts/line-histogram'
   import Histogram from 'base/echarts/histogram'
   import LineChart from 'base/echarts/line-chart'
   import PieChart from 'base/echarts/pie-chart'
   import {ERR_OK} from 'api/config'
-  import {getTotalTest, getWeekDayStr, getTestTime, getRealTest} from '../page'
+  import {getTotalTest, getTestTime, getRealTest} from 'api/statistics'
+  import {getWeekDayStr} from 'common/js/date'
   const TABVALDEFAULT = 0
 
   export default {
     data() {
       return {
-        totalTestTimeText: '累计考试时长',
-        totalTestNumText: '累计考试次数',
         totalTime: 0,
         totalNum: 0,
         realTestTitle: '仿真测试统计图',
@@ -70,6 +65,25 @@
         testTimeLegendName: '分钟',
         testTimeYAxisTextName: '分钟',
         testTimeDataArr: []
+      }
+    },
+    computed: {
+      totalInfo() {
+        let arr = [
+          {
+            text: '累计考试时长',
+            info: `${this.totalTime}分钟`
+          },
+          {
+            text: '累计考试次数',
+            info: `${this.totalNum}次`
+          }
+        ]
+        return arr
+      },
+      // 获取最近7天的日期字符串
+      testDataText() {
+        return getWeekDayStr()
       }
     },
     created() {
@@ -123,12 +137,6 @@
           this.realTestDataArr2.push(res.sixthDayPassRatio)
           this.realTestDataArr2.push(res.seventhDayPassRatio)
         })
-      }
-    },
-    computed: {
-      // 获取最近7天的日期字符串
-      testDataText() {
-        return getWeekDayStr()
       }
     },
     components: {

@@ -9,13 +9,13 @@
     </div>
     <!-- 功能列表 -->
     <ul class="list">
-      <li class="list-item">
+      <router-link tag="a" class="list-item" to="/my-code">
         <span class="icon iconfont icon-code"></span>
         <span class="text">我的积分</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
-      </li>
+      </router-link>
       <router-link tag="li" class="list-item" to="/statistics">
         <span class="icon iconfont icon-statistic"></span>
         <span class="text">统计管理</span>
@@ -147,6 +147,7 @@
   .list
     margin-top: 17px
     .list-item
+      display: block
       height: 85px
       line-height: 85px
       padding-right: 22px

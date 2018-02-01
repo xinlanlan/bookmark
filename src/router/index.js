@@ -101,6 +101,13 @@ const QuestionBank = (resolve) => {
   })
 }
 
+// 我的积分
+const MyCode = (resolve) => {
+  import('components/my-code/my-code').then((module) => {
+    resolve(module)
+  })
+}
+
 export default new Router({
   routes: [
     {
@@ -173,6 +180,10 @@ export default new Router({
           component: StatisticsTest
         }
       ]
+    },
+    {
+      path: '/my-code',
+      component: MyCode
     }
   ]
 })

@@ -1,10 +1,6 @@
 <template>
   <div class="read">
-    <total :total-time-text="totalReadTimeText"
-           :total-num-text="totalReadNumText"
-           :total-time="totalTime"
-           :total-num="totalNum"
-    ></total>
+    <total :data="totalInfo"></total>
     <div class="chart">
       <!-- 阅读次数统计图 -->
       <div class="chart-item">
@@ -55,20 +51,19 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import Total from '../total/total'
+  import Total from 'base/statistics/total'
   import EchartModel from 'base/echarts/echart-model'
   import Histogram from 'base/echarts/histogram'
   import LineChart from 'base/echarts/line-chart'
   import PieChart from 'base/echarts/pie-chart'
   import {ERR_OK} from 'api/config'
-  import {getWeekDayStr, getReadNum, getReadTime} from '../page'
+  import {getReadNum, getReadTime} from 'api/statistics'
+  import {getWeekDayStr} from 'common/js/date'
   const TABVALDEAULT = 0
 
   export default {
     data() {
       return {
-        totalReadTimeText: '累计阅读时长',
-        totalReadNumText: '累计次数统计',
         totalTime: 0,
         totalNum: 0,
         tabNumVal: TABVALDEAULT,
@@ -82,6 +77,24 @@
         timeLegendName: '分钟',
         timeYAxisTextName: '分钟',
         timeDataArr: []
+      }
+    },
+    computed: {
+      totalInfo() {
+        let arr = [
+          {
+            text: '累计阅读时长',
+            info: `${this.totalTime}分钟`
+          },
+          {
+            text: '累计次数统计',
+            info: `${this.totalNum}次`
+          }
+        ]
+        return arr
+      },
+      timeDataText() {
+        return getWeekDayStr()
       }
     },
     created() {
@@ -123,11 +136,6 @@
             this.timeDataArr.push(res.seventhDayTime)
           }
         })
-      }
-    },
-    computed: {
-      timeDataText() {
-        return getWeekDayStr()
       }
     },
     components: {

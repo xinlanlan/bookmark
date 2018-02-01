@@ -1,14 +1,9 @@
 <template>
   <div class="total">
-    <div class="item">
+    <div v-for="item in data" class="item">
       <span class="icon"></span>
-      <span class="text">{{totalTimeText}}</span>
-      <span class="info">{{totalTime}}分钟</span>
-    </div>
-    <div class="item">
-      <span class="icon"></span>
-      <span class="text">{{totalNumText}}</span>
-      <span class="info">{{totalNum}}次</span>
+      <span class="text">{{item.text}}</span>
+      <span class="info">{{item.info}}</span>
     </div>
   </div>
 </template>
@@ -16,21 +11,9 @@
 <script type="text/ecmascript-6">
   export default {
     props: {
-      totalTimeText: {
-        type: String,
-        default: '第一个文字说明'
-      },
-      totalNumText: {
-        type: String,
-        default: '第二个文字说明'
-      },
-      totalTime: {
-        type: Number,
-        default: 0
-      },
-      totalNum: {
-        type: Number,
-        default: 0
+      data: {
+        type: Array,
+        default: null
       }
     }
   }

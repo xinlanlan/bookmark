@@ -1,14 +1,4 @@
 import axios from 'axios'
-import {getDayStr} from 'common/js/dom'
-
-// 获取最近7天的日期
-export function getWeekDayStr() {
-  let arr = []
-  for (let i = -6; i <= 0; i++) {
-    arr.push(getDayStr(i))
-  }
-  return arr
-}
 
 // 获取阅读次数统计图接口
 export function getReadNum() {
@@ -51,6 +41,21 @@ export function getTestTime() {
   const url = '/ebook/countInfo/selectScoreTime'
 
   return axios.get(url).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 获取我的积分中总积分和排名以及积分构成图的接口(注意时间传的是秒)
+export function getPersonalTotalScore(startTime, endTime) {
+  const url = '/ebook/countInfo/selectPresonalScoreCountInfo'
+  const data = {
+    startTime: startTime,
+    endTime: endTime
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
     return Promise.resolve(res.data)
   })
 }
