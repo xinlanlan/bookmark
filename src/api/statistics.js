@@ -59,3 +59,48 @@ export function getPersonalTotalScore(startTime, endTime) {
     return Promise.resolve(res.data)
   })
 }
+
+// 获取阅读积分详情的接口
+export function getPersonalReadScore(startTime, endTime) {
+  const url = '/ebook/countInfo/selectPresonalReadScoreCountInfo'
+  const data = {
+    startTime: startTime,
+    endTime: endTime
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 获取职位积分详情的接口
+export function getPersonalPositionScore(startTime, endTime) {
+  const url = '/ebook/countInfo/selectPresonalJixiaoScoreCountInfo'
+  const data = {
+    startTime: startTime,
+    endTime: endTime
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 获取考试积分详情接口
+export function getPersonalTestScore(startTime, endTime) {
+  const url = '/ebook/countInfo/selectPresonalKaoshiScoreCountInfo'
+  const data = {
+    startTime: startTime,
+    endTime: endTime
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

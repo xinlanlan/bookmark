@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <div class="header">
-      <h1 class="title" :class="positionClass[positionIndex]">{{title}}</h1>
+      <div class="header-box">
+        <h1 class="title" :class="positionClass[positionIndex]">{{title}}</h1>
+        <slot></slot>
+      </div>
     </div>
     <div v-if="tabChartBtnGroup" class="tab-chart">
       <ul class="tab-btn-group">
@@ -71,13 +74,13 @@
   @import "~common/stylus/variable"
   .header
     padding: 0 17px
+    .header-box
+      border-bottom: 1px solid #ddd
     .title
       height: 90px
       line-height: 90px
-      padding: 0 22px
       font-size: $font-size-medium
       font-weight: 300
-      border-bottom: 1px solid #ddd
       &.left
         text-align: left
       &.center
