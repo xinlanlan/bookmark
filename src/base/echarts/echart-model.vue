@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <div class="header">
-      <h1 class="title">{{title}}</h1>
+      <div class="header-box">
+        <h1 class="title" :class="positionClass[positionIndex]">{{title}}</h1>
+        <slot></slot>
+      </div>
     </div>
     <div v-if="tabChartBtnGroup" class="tab-chart">
       <ul class="tab-btn-group">
@@ -14,6 +17,11 @@
 <script type="text/ecmascript-6">
   export default {
     props: {
+      // 默认为0居左，1居中，2居右
+      positionIndex: {
+        type: Number,
+        default: 0
+      },
       title: {
         type: String,
         default: '标题'
@@ -25,6 +33,7 @@
     },
     data() {
       return {
+        positionClass: ['left', 'center', 'right'],
         tabArr: [
           {
             text: '柱状',
@@ -65,13 +74,19 @@
   @import "~common/stylus/variable"
   .header
     padding: 0 17px
+    .header-box
+      border-bottom: 1px solid #ddd
     .title
       height: 90px
       line-height: 90px
-      padding: 0 22px
       font-size: $font-size-medium
       font-weight: 300
-      border-bottom: 1px solid #ddd
+      &.left
+        text-align: left
+      &.center
+        text-align: center
+      &.right
+        text-align: right
   .tab-chart
     height: 112px
     .tab-btn-group
