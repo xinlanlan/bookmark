@@ -152,7 +152,7 @@
       line-height: 85px
       padding-right: 22px
       border-bottom: 1px solid #ddd
-      color: #000
+      color: #222
       background-color: #fff
       clear: both
       &:active
