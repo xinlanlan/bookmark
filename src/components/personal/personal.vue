@@ -16,6 +16,13 @@
           <i class="arrow-rig"></i>
         </span>
       </router-link>
+      <router-link tag="a" class="list-item" to="/my-period">
+        <span class="icon iconfont icon-period"></span>
+        <span class="text">我的学时</span>
+        <span class="point">
+          <i class="arrow-rig"></i>
+        </span>
+      </router-link>
       <router-link tag="a" class="list-item" to="/statistics">
         <span class="icon iconfont icon-statistic"></span>
         <span class="text">统计管理</span>
@@ -30,13 +37,13 @@
           <i class="arrow-rig"></i>
         </span>
       </a>
-      <a class="list-item">
+      <router-link tag="a" class="list-item" to="/my-info">
         <span class="icon iconfont icon-msg"></span>
         <span class="text">我的消息</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
-      </a>
+      </router-link>
       <router-link tag="a" class="list-item" to="/job-exponent">
         <span class="icon iconfont icon-exponent"></span>
         <span class="text">乔布指数</span>
@@ -190,6 +197,9 @@
   .icon-code
     font-size: 36px
     color: #fb8672
+  .icon-period
+    font-size: 36px
+    color: #8281d1
   .icon-statistic
     font-size: 46px
     color: #fec985

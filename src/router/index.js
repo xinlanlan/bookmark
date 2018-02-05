@@ -87,6 +87,13 @@ const MyCode = (resolve) => {
   })
 }
 
+// 我的学时
+const MyPeriod = (resolve) => {
+  import('components/my-period/my-period').then((module) => {
+    resolve(module)
+  })
+}
+
 // 统计管理
 const Statistics = (resolve) => {
   import('components/statistics/statistics').then((module) => {
@@ -104,6 +111,13 @@ const StatisticsRead = (resolve) => {
 // 统计管理的考试子组件
 const StatisticsTest = (resolve) => {
   import('components/statistics/test/test').then((module) => {
+    resolve(module)
+  })
+}
+
+// 我的消息
+const MyInfo = (resolve) => {
+  import('components/my-info/my-info').then((module) => {
     resolve(module)
   })
 }
@@ -185,6 +199,10 @@ export default new Router({
       component: MyCode
     },
     {
+      path: '/my-period',
+      component: MyPeriod
+    },
+    {
       path: '/statistics',
       component: Statistics,
       redirect: '/statistics/read',
@@ -198,6 +216,10 @@ export default new Router({
           component: StatisticsTest
         }
       ]
+    },
+    {
+      path: '/my-info',
+      component: MyInfo
     },
     {
       path: '/job-exponent',

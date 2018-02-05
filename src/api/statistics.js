@@ -155,3 +155,18 @@ export function getExponentImg(startTime, endTime, page, pageSize) {
     return Promise.resolve(res.data)
   })
 }
+
+// 获取总学时的接口方法(时间为秒)
+export function getTotalPeriod(startTime, endTime) {
+  const url = '/ebook/countInfo/selectLearnTime'
+  const data = {
+    startTime: startTime,
+    endTime: endTime
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

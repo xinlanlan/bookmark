@@ -38,4 +38,6 @@
       .info
         float: right
         color: $color-theme
+      &:last-child
+        border: none
 </style>
