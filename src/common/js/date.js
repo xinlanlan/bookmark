@@ -26,3 +26,12 @@ export function getWeekMill() {
   }
   return obj
 }
+
+// 根据毫秒数或描述转化为文字日期（2017-04-25的形式,传入为毫秒）
+export function getDateString(mill) {
+  let date = new Date(mill)
+  let year = date.getFullYear()
+  let month = date.getMonth() + 1
+  let day = date.getDate()
+  return year + '-' + month + '-' + day
+}

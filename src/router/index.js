@@ -108,6 +108,13 @@ const StatisticsTest = (resolve) => {
   })
 }
 
+// 乔布指数
+const JobExponent = (resolve) => {
+  import('components/job-exponent/job-exponent').then((module) => {
+    resolve(module)
+  })
+}
+
 // 修改密码
 const UpdatePsd = (resolve) => {
   import('components/update-psd/update-psd').then((module) => {
@@ -191,6 +198,10 @@ export default new Router({
           component: StatisticsTest
         }
       ]
+    },
+    {
+      path: '/job-exponent',
+      component: JobExponent
     },
     {
       path: '/update-psd',

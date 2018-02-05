@@ -104,3 +104,54 @@ export function getPersonalTestScore(startTime, endTime) {
     return Promise.resolve(res.data)
   })
 }
+
+// 获取乔布指数中统计句子的接口
+export function getExponentSentence(startTime, endTime, page, pageSize) {
+  const url = '/ebook/book/selectCountBookSentences'
+  const data = {
+    startTime: startTime,
+    endTime: endTime,
+    page: page,
+    pageSize: pageSize
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 获取乔布指数中统计词的接口
+export function getExponentWord(startTime, endTime, page, pageSize) {
+  const url = '/ebook/book/selectCountBookWord'
+  const data = {
+    startTime: startTime,
+    endTime: endTime,
+    page: page,
+    pageSize: pageSize
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
+// 获取乔布指数中统计图片的接口
+export function getExponentImg(startTime, endTime, page, pageSize) {
+  const url = '/ebook/book/selectCountBookPicture'
+  const data = {
+    startTime: startTime,
+    endTime: endTime,
+    page: page,
+    pageSize: pageSize
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}

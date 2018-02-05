@@ -37,13 +37,13 @@
           <i class="arrow-rig"></i>
         </span>
       </a>
-      <a class="list-item">
+      <router-link tag="a" class="list-item" to="/job-exponent">
         <span class="icon iconfont icon-exponent"></span>
         <span class="text">乔布指数</span>
         <span class="point">
           <i class="arrow-rig"></i>
         </span>
-      </a>
+      </router-link>
       <a class="list-item">
         <span class="icon iconfont icon-ci"></span>
         <span class="text">词库管理</span>
