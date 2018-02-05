@@ -235,12 +235,14 @@
     .sentence-box
       height: 402px
       transition: all 0.5s
+      transform: translate3d(0, 0, 0)
       &.unfold
         height: 842px
       .sentence-section
         height: 330px
         overflow-y: scroll
         transition: all 0.5s
+        transform: translate3d(0, 0, 0);
         &.unfold
           height: 770px
         .section-index

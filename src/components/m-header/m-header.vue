@@ -22,6 +22,7 @@
     },
     methods: {
       backLastPage() {
+        this.$router.isBack = true
         this.$router.go(-1)
         // this.$emit('back-page')
       }
