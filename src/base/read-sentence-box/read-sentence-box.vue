@@ -71,11 +71,15 @@
           </li>
         </ul>
       </li>
+      <div class="loading-container" v-show="!sentenceArr.length">
+        <loading></loading>
+      </div>
     </ul>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import Loading from 'base/loading/loading'
   import {getKeySentences, getLastSentence, getNextSentence, getImportImg} from 'api/get-sentence'
   import {markSentence} from './page'
   import {ERR_OK, imgBaseUrl} from 'api/config'
@@ -208,6 +212,9 @@
           }))
         }
       }
+    },
+    components: {
+      Loading
     }
   }
 </script>
@@ -340,4 +347,10 @@
       border-color: #4e4a4a
       border-left-color: transparent
       border-right-color: transparent
+  /* 加载等待 */
+  .loading-container
+    position: absolute
+    width: 100%
+    top: 300px
+    transform: translateY(-50%)
 </style>

@@ -126,9 +126,13 @@
         </topic-footer>
       </div>
     </div>
-
     <!-- 弹窗 -->
     <know-dialog v-on:close-dialog="closeDialog" :show="showDialog" :uri="byUri"></know-dialog>
+
+    <!-- 加载等待 -->
+    <div class="loading-container" v-show="!judgeList.length && !radioList.length && !multipleList.length && !sketchList.length && !discussList.length">
+      <loading></loading>
+    </div>
   </div>
 </template>
 
@@ -136,6 +140,7 @@
   import TopicName from 'base/topic/topic-name'
   import TopicFooter from 'base/topic/topic-footer'
   import KnowDialog from 'base/know-dialog/know-dialog'
+  import Loading from 'base/loading/loading'
 
   export default {
     props: {
@@ -253,7 +258,8 @@
     components: {
       TopicName,
       TopicFooter,
-      KnowDialog
+      KnowDialog,
+      Loading
     }
   }
 </script>
@@ -282,4 +288,10 @@
       height: 100%
       padding: 0 20px
       border: 1px solid $color-theme
+  /* 加载等待 */
+  .loading-container
+    position: absolute
+    width: 100%
+    top: 300px
+    transform: translateY(-50%)
 </style>
