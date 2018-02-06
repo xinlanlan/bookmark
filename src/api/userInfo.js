@@ -49,6 +49,20 @@ export function getNickname() {
   })
 }
 
+// 更新昵称接口
+export function updateNickname(nickname) {
+  const url = '/ebook/user/updateNickName'
+  const data = {
+    nickName: nickname
+  }
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
+
 // 统计用户页面停留时长的接口
 export function sendTime() {
   const url = '/ebook/countInfo/insertCountInfo'

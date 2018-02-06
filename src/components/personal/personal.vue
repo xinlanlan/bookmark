@@ -5,7 +5,7 @@
       <div class="avatar">
         <img src="./avatar.png" alt="头像">
       </div>
-      <p class="nickname">{{nickname}}</p>
+      <router-link tag="p" class="nickname" to="/update-nick">{{nickname}}</router-link>
     </div>
     <!-- 功能列表 -->
     <div class="list">

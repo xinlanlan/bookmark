@@ -80,6 +80,13 @@ const Personal = (resolve) => {
   })
 }
 
+// 修改昵称
+const UpdateNick = (resolve) => {
+  import('components/update-nick/update-nick').then((module) => {
+    resolve(module)
+  })
+}
+
 // 我的积分
 const MyCode = (resolve) => {
   import('components/my-code/my-code').then((module) => {
@@ -193,6 +200,10 @@ export default new Router({
           next({path: '/bookrack', query: {type: 2}})
         }
       }
+    },
+    {
+      path: '/update-nick',
+      component: UpdateNick
     },
     {
       path: '/my-code',
