@@ -30,6 +30,7 @@
       line-height: 95px
       padding: 0 37px
       border-bottom: 1px solid #ddd
+      clear: both
       .icon
         float: left
         width: 50px

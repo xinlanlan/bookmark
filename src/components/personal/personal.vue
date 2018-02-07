@@ -148,6 +148,7 @@
         margin: 0 auto
     .nickname
       height: 32px
+      line-height: 32px
       text-align: center
       font-size: 32px
       color: #fff
@@ -161,7 +162,7 @@
       border-bottom: 1px solid #ddd
       color: #222
       background-color: #fff
-      clear: both
+      overflow: hidden
       &:active
         background-color: $color-background-active
       &:first-child

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <m-header :data="headerText" :left-arrow="true">
-      <a v-if="bookrackType === 0 || bookrackType === 9" @click="sureBtn" class="sure-btn"><span>完成</span></a>
+      <a v-if="bookrackType === 0 || bookrackType === 9" @click="sureBtn" class="sure-btn">完成</a>
     </m-header>
     <div class="list">
       <label @click="clickItemBook(item.bookUri, item.pdfUri, item.bookTitle)" v-for="item in bookListArr" class="list-item">
@@ -125,7 +125,6 @@
     width: 88px
     height: 44px
     line-height: 44px
-    float: right
     text-align: center
     right: 20px
     top: 20px

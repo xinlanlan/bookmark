@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <m-header :data="headerText" :left-arrow="true"></m-header>
-    <read-sentence-box :params="getSentenceParam" :type="getImportType"></read-sentence-box>
+    <read-sentence-box :params="getSentenceParam" :type="getImportType" :read-btn="true"></read-sentence-box>
   </div>
 </template>
 
@@ -14,7 +14,8 @@
     data() {
       return {
         headerText: '智能阅读',
-        getImportType: GETIMPORTTYPE
+        getImportType: GETIMPORTTYPE,
+        readSentenceOver: false
       }
     },
     computed: {

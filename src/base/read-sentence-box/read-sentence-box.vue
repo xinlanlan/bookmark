@@ -1,5 +1,8 @@
 <template>
   <div class="content">
+    <div v-if="readBtn" @click="readSentence" class="iconfont icon-ting">
+      <audio ref="totalAudio" :src="readUrl + "></audio>
+    </div>
     <ul class="list">
       <li v-for="(item, index) in sentenceArr" class="list-item">
         <div :class="'bgs_'+(index%3)" class="list-content">
@@ -84,6 +87,7 @@
   import {markSentence} from './page'
   import {ERR_OK, imgBaseUrl} from 'api/config'
   import {alertTn} from 'common/js/confirm'
+  const READBASEURL = 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&per=1&spd=5&text='
 
   export default {
     props: {
@@ -93,7 +97,12 @@
       },
       type: {
         type: Number,
+        // 0表示获取的事重点句子，1表示获取的是重点图片
         default: 0
+      },
+      readBtn: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -101,7 +110,8 @@
         sentenceArr: [],
         current: {num: -1, index: -1},
         bookName: this.$route.query.bookName,
-        imgBaseUrl: imgBaseUrl
+        imgBaseUrl: imgBaseUrl,
+        readUrl: READBASEURL
       }
     },
     created() {
@@ -211,6 +221,14 @@
             unfold: false
           }))
         }
+      },
+      readSentence() {
+        let audio = this.$refs.totalAudio
+        if (audio.paused) {
+          audio.play()
+        } else {
+          audio.pause()
+        }
       }
     },
     components: {
@@ -226,6 +244,15 @@
   .content
     padding: 20px 26px 0
     background-color: $color-highlight-background
+  .icon-ting
+    position: absolute
+    top: 0
+    right: 20px
+    padding: 12px
+    font-size: 40px
+    color: #fff
+    &:active
+      background-color: $color-theme-active
   .list-item
     margin-bottom: 26px
     background-color: #fff
@@ -352,5 +379,5 @@
     position: absolute
     width: 100%
     top: 300px
-    transform: translateY(-50%)
+    margin-left: -26px
 </style>

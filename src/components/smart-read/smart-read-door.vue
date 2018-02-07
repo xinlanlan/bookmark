@@ -162,7 +162,7 @@
           font-size: 32px
           font-style: normal
           color: #fff
-          border-radius: 28px
+          border-radius: 29px
           &.book-icon
             background-color: #60d1d4
           &.word-icon
