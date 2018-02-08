@@ -1,10 +1,10 @@
 <template>
   <div class="content">
     <div v-if="readBtn" @click="readSentence" class="iconfont icon-ting">
-      <audio ref="totalAudio" :src="readUrl + "></audio>
+      <audio ref="totalAudio" :src="readUrl + readText"></audio>
     </div>
     <ul class="list">
-      <li v-for="(item, index) in sentenceArr" class="list-item">
+      <li v-for="(item, index) in sentenceArr" class="list-item" ref="listItem">
         <div :class="'bgs_'+(index%3)" class="list-content">
           <div class="get-sentence-arrow">
             <span @click="_getLastSentence(sentenceArr[index].getlastSentenceUri, sentenceArr[index], true)" v-show="item.unfold" class="iconfont icon-top-arrow"></span>
@@ -78,11 +78,13 @@
         <loading></loading>
       </div>
     </ul>
+    <scroll-top></scroll-top>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import Loading from 'base/loading/loading'
+  import ScrollTop from 'base/scroll-top/scroll-top'
   import {getKeySentences, getLastSentence, getNextSentence, getImportImg} from 'api/get-sentence'
   import {markSentence} from './page'
   import {ERR_OK, imgBaseUrl} from 'api/config'
@@ -111,7 +113,9 @@
         current: {num: -1, index: -1},
         bookName: this.$route.query.bookName,
         imgBaseUrl: imgBaseUrl,
-        readUrl: READBASEURL
+        readUrl: READBASEURL,
+        readText: '',
+        readIndex: 0
       }
     },
     created() {
@@ -123,6 +127,11 @@
       document.addEventListener('click', (e) => {
         this.current.index = -1
       })
+    },
+    mounted() {
+      if (this.type === 0) {
+        this.readNextText()
+      }
     },
     methods: {
       // 点击底部tab栏进行切换的时候
@@ -221,7 +230,10 @@
             unfold: false
           }))
         }
+        // 设置读第一句的时候
+        this.readText = data[this.readIndex].text
       },
+      // 点击读的按钮的时候
       readSentence() {
         let audio = this.$refs.totalAudio
         if (audio.paused) {
@@ -229,10 +241,33 @@
         } else {
           audio.pause()
         }
+      },
+      // 每一条读完的时候读下一句
+      readNextText() {
+        let ele = this.$refs.totalAudio
+        ele.addEventListener('ended', (e) => {
+          if (this.current.index === this.readIndex && this.current.num === 3) {
+            this.readIndex --
+          } else {
+            let oThis = this.$refs.listItem[this.readIndex]
+            let oHeight = oThis.offsetTop + 300
+            scrollTo(0, oHeight)
+          }
+          this.readIndex ++
+          if (this.sentenceArr[this.readIndex].text) {
+            this.readText = this.sentenceArr[this.readIndex].text
+            this.$nextTick(() => {
+              ele.play()
+            })
+          } else {
+            this.readText = this.sentenceArr[0].text
+          }
+        })
       }
     },
     components: {
-      Loading
+      Loading,
+      ScrollTop
     }
   }
 </script>

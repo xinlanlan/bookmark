@@ -10,6 +10,7 @@
         <span class="item-text">{{item.bookTitle}}</span>
       </label>
     </div>
+    <scroll-top></scroll-top>
   </div>
 </template>
 
@@ -18,6 +19,7 @@
    * bookrackType为0的时候是智能阅读，3的时候是全书阅读
    */
   import MHeader from 'components/m-header/m-header'
+  import ScrollTop from 'base/scroll-top/scroll-top'
   import {baseUrl} from 'api/config'
   import {getBookList} from './page'
   import {alertTn} from 'common/js/confirm'
@@ -113,7 +115,8 @@
       }
     },
     components: {
-      MHeader
+      MHeader,
+      ScrollTop
     }
   }
 </script>
