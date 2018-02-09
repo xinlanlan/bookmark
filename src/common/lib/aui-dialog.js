@@ -1,10 +1,3 @@
-/**
- * aui-dialog.js
- * @author 流浪男
- * @todo more things to abstract, e.g. Loading css etc.
- * Licensed under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- */
 // (function(window) {
   'use strict'
   var AuiDialog = function() {
@@ -122,6 +115,16 @@
       return self.create(params, callback)
     }
   }
-  // window.AuiDialog = AuiDialog
-  module.exports = AuiDialog
+  // 第一种方式 common.js规范
+  if (typeof module !== `undefined` && typeof exports === `object`) {
+    module.exports = AuiDialog
+  }
+
+  // 第二种方式 cmd规范
+  // module.exports.AuiDialog = AuiDialog
+  // module.exports = AuiDialog
+
+  // 第三种方式 原生
+  // this.AuiDialog = AuiDialog
+
 // })(window)
