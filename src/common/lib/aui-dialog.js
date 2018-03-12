@@ -115,10 +115,13 @@
       return self.create(params, callback)
     }
   }
+  // es6的引用方法
+  export default AuiDialog
+
   // 第一种方式 common.js规范
-  if (typeof module !== `undefined` && typeof exports === `object`) {
+  /* if (typeof module !== `undefined` && typeof exports === `object`) {
     module.exports = AuiDialog
-  }
+  } */
 
   // 第二种方式 cmd规范
   // module.exports.AuiDialog = AuiDialog
