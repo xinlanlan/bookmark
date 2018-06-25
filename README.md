@@ -1,7 +1,5 @@
 # bookmark
 
-> 乔布阅读2.0
-
 ## Build Setup
 
 ``` bash
